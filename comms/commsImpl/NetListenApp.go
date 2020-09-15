@@ -1,0 +1,73 @@
+package commsImpl
+
+import (
+	"context"
+	"fmt"
+	"github.com/bhbosman/gocommon/app"
+	"github.com/bhbosman/gocommon/comms/connectionManager"
+	"go.uber.org/fx"
+	"net"
+	url2 "net/url"
+)
+
+type NetListenAppFuncInParams struct {
+	fx.In
+	ClientContextFactories *ConnectionReactorFactories
+	ParentContext          context.Context `name:"Application"`
+	Lifecycle              fx.Lifecycle
+	StackFactory           *TransportFactory
+	Manager                *app.RunTimeManager
+	ConnectionManager      connectionManager.IConnectionManager
+}
+
+func NewNetListenApp(
+	connectionName string,
+	url string,
+	stackName string,
+	userContextFactoryName string,
+	userContext interface{}) NewNetListenAppFunc {
+	return func(params NetListenAppFuncInParams) (*fx.App, error) {
+		return fx.New(
+			fx.LogName(fmt.Sprintf("%v", connectionName)),
+			CommonComponents(
+				url,
+				stackName,
+				params.ClientContextFactories,
+				params.ParentContext,
+				params.StackFactory,
+				params.Manager,
+				params.ConnectionManager,
+				userContextFactoryName,
+				userContext),
+
+			fx.Provide(fx.Annotated{Target: newNetListenManager}),
+			fx.Provide(
+				func(Lifecycle fx.Lifecycle, url *url2.URL) (net.Listener, error) {
+					con, err := net.Listen(url.Scheme, url.Host)
+					if err != nil {
+						return nil, err
+					}
+					Lifecycle.Append(fx.Hook{
+						OnStart: nil,
+						OnStop: func(ctx context.Context) error {
+							return con.Close()
+						},
+					})
+					return con, nil
+				}),
+			fx.Invoke(
+				func(netManager *netListenManager, logger fx.ILogger, cancelFunc context.CancelFunc) {
+					params.Lifecycle.Append(fx.Hook{
+						OnStart: func(ctx context.Context) error {
+							netManager.listenForNewConnections()
+							return nil
+						},
+						OnStop: func(ctx context.Context) error {
+							cancelFunc()
+							return nil
+						},
+					})
+				}),
+		), nil
+	}
+}

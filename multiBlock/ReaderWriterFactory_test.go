@@ -1,0 +1,32 @@
+package multiBlock
+
+import (
+	"context"
+	"github.com/bhbosman/gocommon/log/test"
+	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/assert"
+	"go.uber.org/fx"
+	"go.uber.org/fx/fxtest"
+	"testing"
+)
+
+func TestWriterFactoryService(t *testing.T) {
+	var sut IReaderWriterFactoryService
+	app := fxtest.New(
+		t,
+		test.ProvideLogFactoryForTesting(t, nil),
+		ProvideReaderWriterFactoryService(),
+		fx.Populate(&sut),
+	)
+	if !assert.NoError(t, app.Err()) {
+		return
+	}
+	if !assert.NoError(t, app.Start(context.TODO())) {
+		return
+	}
+	defer func() {
+		assert.NoError(t, app.Start(context.TODO()))
+	}()
+	controller := gomock.NewController(t)
+	defer controller.Finish()
+}

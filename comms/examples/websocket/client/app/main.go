@@ -1,0 +1,54 @@
+package main
+
+import (
+	"context"
+	app2 "github.com/bhbosman/gocommon/app"
+	"github.com/bhbosman/gocommon/comms/commsImpl"
+	"github.com/bhbosman/gocommon/comms/connectionManager"
+	"github.com/bhbosman/gocommon/comms/examples/websocket/client/internal/components"
+	"go.uber.org/fx"
+)
+
+func main() {
+	app := fx.New(
+		fx.LogName("WebSocketClient"),
+		components.RegisterWebSocketDialerForPolygonForex(),
+		connectionManager.RegisterDefaultConnectionManager(),
+		commsImpl.RegisterAllConnectionRelatedServices(),
+		fx.Provide(fx.Annotated{Name: "PolygonApiKey", Target: commsImpl.CreateStringContext("9aiTcEIquaTWBiP9gG_5PnhDDSWntA30IB85tb")}),
+		app2.RegisterRootContext(),
+		fx.Invoke(
+			func(params struct {
+				fx.In
+				Lifecycle      fx.Lifecycle
+				Apps           []*fx.App `group:"Apps"`
+				Logger         fx.ILogger
+				RunTimeManager *app2.RunTimeManager
+			}) {
+				params.Lifecycle.Append(fx.Hook{
+					OnStart: func(ctx context.Context) error {
+						return params.RunTimeManager.Start(ctx)
+					},
+					OnStop: func(ctx context.Context) error {
+						return params.RunTimeManager.Stop(ctx)
+					},
+				})
+				for _, item := range params.Apps {
+					localApp := item
+					params.Lifecycle.Append(fx.Hook{
+						OnStart: func(ctx context.Context) error {
+							return localApp.Start(ctx)
+						},
+						OnStop: func(ctx context.Context) error {
+							return localApp.Stop(ctx)
+						},
+					})
+				}
+
+			}),
+	)
+	if app.Err() != nil {
+		return
+	}
+	app.Run()
+}
