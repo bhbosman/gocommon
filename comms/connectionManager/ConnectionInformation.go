@@ -3,6 +3,7 @@ package connectionManager
 import (
 	"context"
 	rxgo "github.com/ReactiveX/RxGo"
+	"github.com/icza/gox/fmtx"
 	"sync"
 	"time"
 )
@@ -14,8 +15,16 @@ type StackPropertyKey struct {
 }
 
 type StackPropertyValue struct {
-	MsgCount  int
-	ByteCount int
+	msgCount  int
+	byteCount int
+}
+
+func (self StackPropertyValue) MsgCount() string {
+	return fmtx.FormatInt(int64(self.msgCount), 3, ',')
+}
+
+func (self StackPropertyValue) ByteCount() string {
+	return fmtx.FormatSize(int64(self.byteCount), fmtx.SizeUnitAuto, 2)
 }
 
 type ConnectionInformation struct {

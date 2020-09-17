@@ -32,7 +32,7 @@ func NewReaderWriterFactoryService() *ReaderWriterFactoryService {
 
 type ReaderWriterFactoryInParams struct {
 	fx.In
-	LogFactory *log2.LogFactory
+	LogFactory *log2.Factory
 }
 type ReaderWriterFactoryOutParams struct {
 	fx.Out

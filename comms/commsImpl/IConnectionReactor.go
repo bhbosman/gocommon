@@ -4,8 +4,8 @@ import (
 	"context"
 	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
-	"github.com/bhbosman/gocommon/stream"
-	"go.uber.org/fx"
+	"github.com/bhbosman/gocommon/log"
+	"github.com/bhbosman/goprotoextra"
 	"net"
 	"net/url"
 )
@@ -16,8 +16,8 @@ type IConnectionReactor interface {
 		url *url.URL,
 		connectionId string,
 		connectionManager connectionManager.IConnectionManager,
-		onSend stream.ToConnectionFunc,
-		toConnectionReactor stream.ToReactorFunc) (rxgo.NextExternalFunc, error)
+		onSend goprotoextra.ToConnectionFunc,
+		toConnectionReactor goprotoextra.ToReactorFunc) (rxgo.NextExternalFunc, error)
 	Close() error
 	Open() error
 }
@@ -29,5 +29,5 @@ const ConnectionReactorFactoryName = "ConnectionReactorFactoryName"
 
 type IConnectionReactorFactory interface {
 	Name() string
-	Create(name string, cancelCtx context.Context, cancelFunc context.CancelFunc, logger fx.ILogger, userContext interface{}) IConnectionReactor
+	Create(name string, cancelCtx context.Context, cancelFunc context.CancelFunc, logger *log.SubSystemLogger, userContext interface{}) IConnectionReactor
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/bhbosman/gocommon/constants"
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
-	"github.com/bhbosman/gocommon/stream"
+	"github.com/bhbosman/goprotoextra"
 	"time"
 )
 
@@ -34,7 +34,7 @@ func StackDefinition(
 						stackName,
 						rxgo.StreamDirectionInbound,
 						params.ConnectionManager,
-						func(ctx context.Context, i stream.ReadWriterSize) (stream.ReadWriterSize, error) {
+						func(ctx context.Context, i goprotoextra.ReadWriterSize) (goprotoextra.ReadWriterSize, error) {
 							return i, nil
 						},
 						opts...), nil
@@ -55,7 +55,7 @@ func StackDefinition(
 						stackName,
 						rxgo.StreamDirectionOutbound,
 						connectionManager,
-						func(ctx context.Context, rws stream.ReadWriterSize) {
+						func(ctx context.Context, rws goprotoextra.ReadWriterSize) {
 							outBoundChannel <- rxgo.Of(rws)
 						})
 					result := rxgo.FromChannel(outBoundChannel, opts...)

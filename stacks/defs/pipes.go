@@ -16,7 +16,12 @@ type PipeDefinitionParams struct {
 	Obs               rxgo.Observable
 }
 
-func NewPipeDefinitionParams(connectionId string, connectionManager rxgo.IPublishToConnectionManager, cancelContext context.Context, stackCancelFunc CancelFunc, obs rxgo.Observable) PipeDefinitionParams {
+func NewPipeDefinitionParams(
+	connectionId string,
+	connectionManager rxgo.IPublishToConnectionManager,
+	cancelContext context.Context,
+	stackCancelFunc CancelFunc,
+	obs rxgo.Observable) PipeDefinitionParams {
 	return PipeDefinitionParams{
 		ConnectionId:      connectionId,
 		ConnectionManager: connectionManager,

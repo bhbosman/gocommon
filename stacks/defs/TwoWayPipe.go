@@ -3,13 +3,13 @@ package defs
 import (
 	"context"
 	rxgo "github.com/ReactiveX/RxGo"
-	"github.com/bhbosman/gocommon/stream"
-	"go.uber.org/fx"
+	"github.com/bhbosman/gocommon/log"
+	"github.com/bhbosman/goprotoextra"
 	"io"
 )
 
 type TwoWayPipe struct {
-	logger             fx.ILogger
+	logger             *log.SubSystemLogger
 	InBound            chan rxgo.Item
 	OutBound           chan rxgo.Item
 	InboundObservable  rxgo.Observable
@@ -19,7 +19,7 @@ type TwoWayPipe struct {
 	StackState         []StackState
 }
 
-func (self *TwoWayPipe) SendOutgoingData(rws stream.ReadWriterSize) error {
+func (self *TwoWayPipe) SendOutgoingData(rws goprotoextra.ReadWriterSize) error {
 	err := self.cancelCtx.Err()
 	if err != nil {
 		return err
@@ -38,7 +38,7 @@ func (self *TwoWayPipe) ReceiveIncomingData(item io.Reader) error {
 		r := recover()
 		if r != nil {
 			if err, ok := r.(error); ok {
-				self.logger.Error("ReceiveIncomingData", err)
+				_ = self.logger.ErrorWithDescription("ReceiveIncomingData", err)
 			}
 		}
 	}()
@@ -66,7 +66,7 @@ func (self *TwoWayPipe) Close() error {
 }
 
 func NewTwoWayPipe(
-	logger fx.ILogger,
+	logger *log.SubSystemLogger,
 	InBound chan rxgo.Item,
 	OutBound chan rxgo.Item,
 	InboundObservable rxgo.Observable,

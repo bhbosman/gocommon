@@ -9,7 +9,7 @@ import (
 
 func TestLoggingLogLevel(t *testing.T) {
 	tempMap := make(map[string]*SubSystemLogger)
-	fac := NewLogFactory(log.New(os.Stdout, "", 0))
+	fac := NewFactory(log.New(os.Stdout, "", 0))
 	subSystemLoggerFromFactory := fac.Create("ddd")
 	tempMap["ddd"] = subSystemLoggerFromFactory
 	var memoryClone SubSystemLogger = *subSystemLoggerFromFactory

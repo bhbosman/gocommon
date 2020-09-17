@@ -3,7 +3,7 @@ package Server
 import (
 	"context"
 	"github.com/bhbosman/gocommon/comms/commsImpl"
-	"go.uber.org/fx"
+	"github.com/bhbosman/gocommon/log"
 )
 
 type connectionReactorFactory struct {
@@ -14,7 +14,7 @@ func (self *connectionReactorFactory) Create(
 	name string,
 	cancelCtx context.Context,
 	cancelFunc context.CancelFunc,
-	logger fx.ILogger,
+	logger *log.SubSystemLogger,
 	userContext interface{}) commsImpl.IConnectionReactor {
 	result := newConnectionReactor(logger, cancelCtx, cancelFunc, name, userContext)
 	return result

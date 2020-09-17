@@ -11,6 +11,7 @@ import (
 	"github.com/bhbosman/gocommon/stacks/internal/connectionWrapper"
 	"github.com/bhbosman/gocommon/stacks/websocket/wsmsg"
 	"github.com/bhbosman/gocommon/stream"
+	"github.com/bhbosman/goprotoextra"
 	"github.com/gobwas/ws"
 	"github.com/gobwas/ws/wsutil"
 	"go.uber.org/multierr"
@@ -78,9 +79,10 @@ func StackDefinition(
 		var lastUpdate time.Time
 		for {
 			now := time.Now()
-			if now.Sub(lastUpdate) >= time.Second {
+			if now.Sub(lastUpdate) >= time.Second*30 {
 				lastUpdate = now
 				sendPing(ctx, tempStep)
+
 			}
 			msgs, err := wsutil.ReadServerMessage(conn, nil)
 			if err != nil {
@@ -116,6 +118,7 @@ func StackDefinition(
 						true,
 						fmt.Errorf(string(msg.Payload)))
 				case ws.OpPing:
+					print("+")
 					err := wsutil.WriteClientMessage(conn, ws.OpPong, msg.Payload)
 					if err != nil {
 						stackCancelFunc("creating pong payload", true, err)
@@ -157,7 +160,7 @@ func StackDefinition(
 						stackName,
 						rxgo.StreamDirectionInbound,
 						connectionManager,
-						func(ctx context.Context, rws stream.ReadWriterSize) {
+						func(ctx context.Context, rws goprotoextra.ReadWriterSize) {
 							_, err := io.Copy(pipeWriteClose, rws)
 							if err != nil {
 								return
@@ -191,7 +194,7 @@ func StackDefinition(
 						stackName+"FromUser",
 						rxgo.StreamDirectionOutbound,
 						connectionManager,
-						func(ctx context.Context, size stream.ReadWriterSize) {
+						func(ctx context.Context, size goprotoextra.ReadWriterSize) {
 							item := rxgo.Of(size)
 							item.SendContext(ctx, tempStep)
 						},
@@ -204,7 +207,7 @@ func StackDefinition(
 						stackName,
 						rxgo.StreamDirectionOutbound,
 						connectionManager,
-						func(ctx context.Context, size stream.ReadWriterSize) {
+						func(ctx context.Context, size goprotoextra.ReadWriterSize) {
 							switch v := size.(type) {
 							case *multiBlock.ReaderWriter:
 								messageWrapper, err := stream.UnMarshal(v, nil, nil, nil, nil)

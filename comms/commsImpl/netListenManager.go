@@ -5,8 +5,10 @@ import (
 	"github.com/bhbosman/gocommon/app"
 	"github.com/bhbosman/gocommon/comms/common"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
+	"github.com/bhbosman/gocommon/log"
 	"go.uber.org/fx"
 	"golang.org/x/sync/semaphore"
+	log2 "log"
 	"net"
 	"net/url"
 )
@@ -24,13 +26,17 @@ func (self *netListenManager) listenForNewConnections() {
 		sem := semaphore.NewWeighted(512)
 		for {
 			n++
-			self.logger.Printf("Trying to accept connections #%v. ", n)
+			self.logger.LogWithLevel(0, func(logger *log2.Logger) {
+				logger.Printf("Trying to accept connections #%v. ", n)
+			})
 			conn, err := self.Accept()
 			if err != nil {
 				return
 			}
 			if sem.TryAcquire(1) {
-				self.logger.Printf("Accepted connection...")
+				self.logger.LogWithLevel(0, func(logger *log2.Logger) {
+					logger.Printf("Accepted connection...")
+				})
 				conn = newNetConnWithSemaphoreWrapper(conn, sem)
 				self.acceptNewClientConnection(conn)
 				continue
@@ -43,8 +49,9 @@ func (self *netListenManager) listenForNewConnections() {
 
 func (self *netListenManager) acceptNewClientConnection(conn net.Conn) {
 	go func(conn net.Conn) {
-
-		self.logger.Printf("Accepted %s-%s", conn.RemoteAddr(), conn.LocalAddr())
+		self.logger.LogWithLevel(0, func(logger *log2.Logger) {
+			logger.Printf("Accepted %s-%s", conn.RemoteAddr(), conn.LocalAddr())
+		})
 		connectionApp, ctx := self.newConnectionInstance(common.ServerConnection, conn)
 		err := connectionApp.Err()
 		if err != nil {
@@ -81,10 +88,11 @@ func newNetListenManager(
 		CancelCtx                  context.Context
 		CancelFunction             context.CancelFunc
 		StackFactoryFunction       TransportFactoryFunction
-		Logger                     fx.ILogger
+		Logger                     *log.SubSystemLogger
 		ClientContextFactoryName   string      `name:"ConnectionReactorFactoryName"`
 		ClientContext              interface{} `name:"UserContext"`
 		Manager                    *app.RunTimeManager
+		LogFactory                 *log.Factory
 	}) *netListenManager {
 	return &netListenManager{
 		netManager: newNetManager(
@@ -97,6 +105,7 @@ func newNetListenManager(
 			params.ClientContextFactoryName,
 			params.Manager,
 			params.ConnectionManager,
+			params.LogFactory,
 			params.ClientContext),
 		listener: params.Listener,
 	}

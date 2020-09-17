@@ -88,18 +88,18 @@ var _connectionsHtml = []byte(`<!DOCTYPE html>
                     <table border="yes">
                         <tr>
                             <th>Name</th>
-                            <th>In</th>
-                            <th>In</th>
-                            <th>Out</th>
-                            <th>Out</th>
+                            <th style="text-align:right">In(Bytes)</th>
+                            <th style="text-align:right">In(Msgs)</th>
+                            <th style="text-align:right">Out(Msgs)</th>
+                            <th style="text-align:right">Out(Bytes)</th>
                         </tr>
                         {{range .StackProperties}}
                             <tr>
                                 <td>{{.Name}}</td>
-                                <td>{{.InValue.ByteCount}}</td>
-                                <td>{{.InValue.MsgCount}}</td>
-                                <td>{{.OutValue.MsgCount}}</td>
-                                <td>{{.OutValue.ByteCount}}</td>
+                                <td style="text-align:right">{{.InValue.ByteCount}}</td>
+                                <td style="text-align:right">{{.InValue.MsgCount}}</td>
+                                <td style="text-align:right">{{.OutValue.MsgCount}}</td>
+                                <td style="text-align:right">{{.OutValue.ByteCount}}</td>
 
                             </tr>
                         {{end}}
@@ -121,7 +121,7 @@ func connectionsHtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "Connections.html", size: 1662, mode: os.FileMode(420), modTime: time.Unix(1600000284, 0)}
+	info := bindataFileInfo{name: "Connections.html", size: 1888, mode: os.FileMode(420), modTime: time.Unix(1600241301, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }

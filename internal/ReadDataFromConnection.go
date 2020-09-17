@@ -5,7 +5,7 @@ import (
 	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
-	"github.com/bhbosman/gocommon/stream"
+	"github.com/bhbosman/goprotoextra"
 	"net"
 	"time"
 )
@@ -18,7 +18,7 @@ func ReadDataFromConnection(
 	ConnectionId string,
 	index int,
 	description string,
-	next func(rws stream.IReadWriterSize, cancelCtx context.Context, CancelFunc defs.CancelFunc)) {
+	next func(rws goprotoextra.IReadWriterSize, cancelCtx context.Context, CancelFunc defs.CancelFunc)) {
 	messageCount := 0
 	byteCount := 0
 	var buffer []byte

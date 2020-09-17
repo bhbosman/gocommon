@@ -31,18 +31,18 @@
                     <table border="yes">
                         <tr>
                             <th>Name</th>
-                            <th>In</th>
-                            <th>In</th>
-                            <th>Out</th>
-                            <th>Out</th>
+                            <th style="text-align:right">In(Bytes)</th>
+                            <th style="text-align:right">In(Msgs)</th>
+                            <th style="text-align:right">Out(Msgs)</th>
+                            <th style="text-align:right">Out(Bytes)</th>
                         </tr>
                         {{range .StackProperties}}
                             <tr>
                                 <td>{{.Name}}</td>
-                                <td>{{.InValue.ByteCount}}</td>
-                                <td>{{.InValue.MsgCount}}</td>
-                                <td>{{.OutValue.MsgCount}}</td>
-                                <td>{{.OutValue.ByteCount}}</td>
+                                <td style="text-align:right">{{.InValue.ByteCount}}</td>
+                                <td style="text-align:right">{{.InValue.MsgCount}}</td>
+                                <td style="text-align:right">{{.OutValue.MsgCount}}</td>
+                                <td style="text-align:right">{{.OutValue.ByteCount}}</td>
 
                             </tr>
                         {{end}}

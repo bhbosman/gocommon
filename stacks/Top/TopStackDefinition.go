@@ -5,7 +5,7 @@ import (
 	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/gocommon/constants"
 	"github.com/bhbosman/gocommon/stacks/defs"
-	"github.com/bhbosman/gocommon/stream"
+	"github.com/bhbosman/goprotoextra"
 )
 
 func StackDefinition() (*defs.StackDefinition, error) {
@@ -20,7 +20,7 @@ func StackDefinition() (*defs.StackDefinition, error) {
 						constants.TopStackName,
 						rxgo.StreamDirectionInbound,
 						params.ConnectionManager,
-						func(ctx context.Context, rws stream.ReadWriterSize) (stream.ReadWriterSize, error) {
+						func(ctx context.Context, rws goprotoextra.ReadWriterSize) (goprotoextra.ReadWriterSize, error) {
 							return rws, ctx.Err()
 						}), nil
 				},
@@ -35,7 +35,7 @@ func StackDefinition() (*defs.StackDefinition, error) {
 						constants.TopStackName,
 						rxgo.StreamDirectionOutbound,
 						params.ConnectionManager,
-						func(ctx context.Context, rws stream.ReadWriterSize) (stream.ReadWriterSize, error) {
+						func(ctx context.Context, rws goprotoextra.ReadWriterSize) (goprotoextra.ReadWriterSize, error) {
 							return rws, ctx.Err()
 						}), nil
 				},

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/bhbosman/gocommon/app"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
+	"github.com/bhbosman/gocommon/log"
 	"go.uber.org/fx"
 	"net"
 	url2 "net/url"
@@ -18,6 +19,7 @@ type NetListenAppFuncInParams struct {
 	StackFactory           *TransportFactory
 	Manager                *app.RunTimeManager
 	ConnectionManager      connectionManager.IConnectionManager
+	LogFactory             *log.Factory
 }
 
 func NewNetListenApp(
@@ -28,7 +30,7 @@ func NewNetListenApp(
 	userContext interface{}) NewNetListenAppFunc {
 	return func(params NetListenAppFuncInParams) (*fx.App, error) {
 		return fx.New(
-			fx.LogName(fmt.Sprintf("%v", connectionName)),
+			//fx.LogName(fmt.Sprintf("%v", connectionName)),
 			CommonComponents(
 				url,
 				stackName,
@@ -38,6 +40,7 @@ func NewNetListenApp(
 				params.Manager,
 				params.ConnectionManager,
 				userContextFactoryName,
+				params.LogFactory,
 				userContext),
 
 			fx.Provide(fx.Annotated{Target: newNetListenManager}),
@@ -55,8 +58,16 @@ func NewNetListenApp(
 					})
 					return con, nil
 				}),
+			fx.Provide(
+				func(params struct {
+					fx.In
+					Factory *log.Factory
+				}) *log.SubSystemLogger {
+					return params.Factory.Create(fmt.Sprintf("Listener for %v", url))
+				}),
+
 			fx.Invoke(
-				func(netManager *netListenManager, logger fx.ILogger, cancelFunc context.CancelFunc) {
+				func(netManager *netListenManager, logger *log.SubSystemLogger, cancelFunc context.CancelFunc) {
 					params.Lifecycle.Append(fx.Hook{
 						OnStart: func(ctx context.Context) error {
 							netManager.listenForNewConnections()

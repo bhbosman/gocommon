@@ -5,9 +5,9 @@ import (
 	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/gocommon/comms/commsImpl"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
+	"github.com/bhbosman/gocommon/log"
 	"github.com/bhbosman/gocommon/multiBlock"
-	"github.com/bhbosman/gocommon/stream"
-	"go.uber.org/fx"
+	"github.com/bhbosman/goprotoextra"
 	"net"
 	"net/url"
 )
@@ -21,8 +21,8 @@ func (self *connectionReactor) Init(
 	url *url.URL,
 	connectionId string,
 	connectionManager connectionManager.IConnectionManager,
-	onSend stream.ToConnectionFunc,
-	ddd stream.ToReactorFunc) (rxgo.NextExternalFunc, error) {
+	onSend goprotoextra.ToConnectionFunc,
+	ddd goprotoextra.ToReactorFunc) (rxgo.NextExternalFunc, error) {
 	_, err := self.BaseConnectionReactor.Init(conn, url, connectionId, connectionManager, onSend, ddd)
 	if err != nil {
 		return nil, err
@@ -53,7 +53,7 @@ func (self *connectionReactor) doNext(external bool, i interface{}) {
 }
 
 func newConnectionReactor(
-	logger fx.ILogger,
+	logger *log.SubSystemLogger,
 	cancelCtx context.Context,
 	cancelFunc context.CancelFunc,
 	name string,

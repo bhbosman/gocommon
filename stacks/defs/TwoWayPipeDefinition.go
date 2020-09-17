@@ -4,7 +4,7 @@ import (
 	"context"
 	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
-	"go.uber.org/fx"
+	"github.com/bhbosman/gocommon/log"
 )
 
 type StackDefinitionIndex struct {
@@ -56,7 +56,7 @@ func (self *TwoWayPipeDefinition) AddStackDefinitionFunc(fn func() (*StackDefini
 func (self TwoWayPipeDefinition) Build(
 	connectionId string,
 	connectionManager connectionManager.IConnectionManager,
-	logger fx.ILogger,
+	logger *log.SubSystemLogger,
 	cancelCtx context.Context,
 	stackCancelFunc CancelFunc) (*TwoWayPipe, error) {
 	createChannel := func() chan rxgo.Item {

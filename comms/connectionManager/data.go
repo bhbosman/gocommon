@@ -21,8 +21,8 @@ func (self *data) PublishStackData(index int, connectionId, name string, directi
 		ci.mutex.Lock()
 		defer ci.mutex.Unlock()
 		data := StackPropertyValue{
-			MsgCount:  msgValue,
-			ByteCount: byteValue,
+			msgCount:  msgValue,
+			byteCount: byteValue,
 		}
 		ci.StackProperties[StackPropertyKey{
 			Index:     index,

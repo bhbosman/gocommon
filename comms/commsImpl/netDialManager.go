@@ -5,6 +5,7 @@ import (
 	"github.com/bhbosman/gocommon/app"
 	"github.com/bhbosman/gocommon/comms/common"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
+	"github.com/bhbosman/gocommon/log"
 	"go.uber.org/fx"
 	"golang.org/x/sync/semaphore"
 	"net"
@@ -70,10 +71,11 @@ func newNetDialManager(
 		CancelCtx                  context.Context
 		CancelFunction             context.CancelFunc
 		StackFactoryFunction       TransportFactoryFunction
-		Logger                     fx.ILogger
+		Logger                     *log.SubSystemLogger
 		ClientContextFactoryName   string      `name:"ConnectionReactorFactoryName"`
 		ClientContext              interface{} `name:"UserContext"`
 		Manager                    *app.RunTimeManager
+		LogFactory                 *log.Factory
 	}) *netDialManager {
 	return &netDialManager{
 		netManager: newNetManager(
@@ -86,6 +88,7 @@ func newNetDialManager(
 			params.ClientContextFactoryName,
 			params.Manager,
 			params.ConnectionManager,
+			params.LogFactory,
 			params.ClientContext),
 	}
 }

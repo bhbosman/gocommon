@@ -5,12 +5,12 @@ import (
 	"context"
 	"encoding/binary"
 	rxgo "github.com/ReactiveX/RxGo"
+	"github.com/bhbosman/goprotoextra"
 	"sync"
 
 	"github.com/bhbosman/gocommon/constants"
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
-	"github.com/bhbosman/gocommon/stream"
 	"io"
 	"net"
 	"net/url"
@@ -28,7 +28,9 @@ func StackDefinition(
 		Inbound: func(index int, ctx context.Context) defs.BoundDefinition {
 			decompressorStream := multiBlock.NewReaderWriter()
 			decompressor := flate.NewReader(decompressorStream)
-			mutex := sync.Mutex{}
+			// decompressorMutex is here to safe guard panics when trying to destroy,
+			//and while still busy processing data
+			decompressorMutex := sync.Mutex{}
 			return defs.BoundDefinition{
 				PipeDefinition: func(params defs.PipeDefinitionParams) (rxgo.Observable, error) {
 					if stackCancelFunc == nil {
@@ -40,9 +42,9 @@ func StackDefinition(
 						stackName,
 						rxgo.StreamDirectionInbound,
 						params.ConnectionManager,
-						func(ctx context.Context, incomingBlock stream.ReadWriterSize) (stream.ReadWriterSize, error) {
-							mutex.Lock()
-							defer mutex.Unlock()
+						func(ctx context.Context, incomingBlock goprotoextra.ReadWriterSize) (goprotoextra.ReadWriterSize, error) {
+							decompressorMutex.Lock()
+							defer decompressorMutex.Unlock()
 							b := [8]byte{}
 							_, err := incomingBlock.Read(b[:])
 							if err != nil {
@@ -67,13 +69,13 @@ func StackDefinition(
 				},
 				PipeState: defs.PipeState{
 					Start: func(ctx context.Context) error {
-						mutex.Lock()
-						defer mutex.Unlock()
+						decompressorMutex.Lock()
+						defer decompressorMutex.Unlock()
 						return ctx.Err()
 					},
 					End: func() error {
-						mutex.Lock()
-						defer mutex.Unlock()
+						decompressorMutex.Lock()
+						defer decompressorMutex.Unlock()
 						return decompressor.Close()
 					},
 				},
@@ -82,7 +84,9 @@ func StackDefinition(
 		Outbound: func(index int, ctx context.Context) defs.BoundDefinition {
 			compressionStream := multiBlock.NewReaderWriter()
 			compression, err := flate.NewWriter(compressionStream, flate.DefaultCompression)
-			mutex := sync.Mutex{}
+			// compressorMutex is here to safe guard panics when trying to destroy,
+			//and while still busy processing data
+			compressionMutex := sync.Mutex{}
 			return defs.BoundDefinition{
 				PipeDefinition: func(params defs.PipeDefinitionParams) (rxgo.Observable, error) {
 					if stackCancelFunc == nil {
@@ -97,9 +101,9 @@ func StackDefinition(
 						stackName,
 						rxgo.StreamDirectionOutbound,
 						params.ConnectionManager,
-						func(ctx context.Context, size stream.ReadWriterSize) (stream.ReadWriterSize, error) {
-							mutex.Lock()
-							defer mutex.Unlock()
+						func(ctx context.Context, size goprotoextra.ReadWriterSize) (goprotoextra.ReadWriterSize, error) {
+							compressionMutex.Lock()
+							defer compressionMutex.Unlock()
 							if ctx.Err() != nil {
 								return nil, err
 							}
@@ -144,13 +148,13 @@ func StackDefinition(
 				},
 				PipeState: defs.PipeState{
 					Start: func(ctx context.Context) error {
-						mutex.Lock()
-						defer mutex.Unlock()
+						compressionMutex.Lock()
+						defer compressionMutex.Unlock()
 						return ctx.Err()
 					},
 					End: func() error {
-						mutex.Lock()
-						defer mutex.Unlock()
+						compressionMutex.Lock()
+						defer compressionMutex.Unlock()
 						return compression.Close()
 					},
 				},

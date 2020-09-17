@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"github.com/bhbosman/gocommon/internal"
+	"github.com/bhbosman/goprotoextra"
 	"sync"
 
 	rxgo "github.com/ReactiveX/RxGo"
@@ -14,8 +15,6 @@ import (
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/gocommon/stacks/internal/connectionWrapper"
-
-	"github.com/bhbosman/gocommon/stream"
 
 	"go.uber.org/multierr"
 	"io"
@@ -62,13 +61,14 @@ func StackDefinition(
 	var nextInBoundChannel, nextOutboundChannel chan rxgo.Item
 	const stackName = "TLS"
 	var stackIndex int
-	wg := sync.WaitGroup{}
-	wg.Add(1)
+	// wg is here to make sure, that the upgradedConnection is properly assigned, before data is read/write to it
+	upgradedConnectionAssignedWaitGroup := sync.WaitGroup{}
+	upgradedConnectionAssignedWaitGroup.Add(1)
 	return &defs.StackDefinition{
 		Name: stackName,
 		Inbound: func(index int, ctx context.Context) defs.BoundDefinition {
-			stackIndex = index
 			nextInBoundChannel = make(chan rxgo.Item)
+			stackIndex = index
 			return defs.BoundDefinition{
 				PipeDefinition: func(params defs.PipeDefinitionParams) (rxgo.Observable, error) {
 					if stackCancelFunc == nil {
@@ -80,8 +80,8 @@ func StackDefinition(
 						stackName,
 						rxgo.StreamDirectionInbound,
 						connectionManager,
-						func(ctx context.Context, rws stream.ReadWriterSize) {
-							wg.Wait()
+						func(ctx context.Context, rws goprotoextra.ReadWriterSize) {
+							upgradedConnectionAssignedWaitGroup.Wait()
 							_, err := io.Copy(pipeWriteClose, rws)
 							if err != nil {
 								return
@@ -114,8 +114,8 @@ func StackDefinition(
 						stackName,
 						rxgo.StreamDirectionOutbound,
 						connectionManager,
-						func(ctx context.Context, size stream.ReadWriterSize) {
-							wg.Wait()
+						func(ctx context.Context, size goprotoextra.ReadWriterSize) {
+							upgradedConnectionAssignedWaitGroup.Wait()
 							_, err := io.Copy(upgradedConnection, size)
 							if err != nil {
 								stackCancelFunc("copy data to upgradedConnection", false, err)
@@ -175,7 +175,7 @@ func StackDefinition(
 					tlsConn = tls.Client(connWrapper, config)
 				}
 				upgradedConnection = tlsConn
-				wg.Done()
+				upgradedConnectionAssignedWaitGroup.Done()
 				if ctx.Err() != nil {
 					return nil, ctx.Err()
 				}
@@ -188,7 +188,7 @@ func StackDefinition(
 					connectionId,
 					stackIndex-1,
 					"Read TLS Connection",
-					func(rws stream.IReadWriterSize, cancelCtx context.Context, CancelFunc defs.CancelFunc) {
+					func(rws goprotoextra.IReadWriterSize, cancelCtx context.Context, CancelFunc defs.CancelFunc) {
 						item := rxgo.Of(rws)
 						item.SendContext(cancelCtx, nextInBoundChannel)
 					})

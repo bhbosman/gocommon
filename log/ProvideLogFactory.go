@@ -5,10 +5,10 @@ import (
 	"log"
 )
 
-func ProvideLogFactory(logger *log.Logger, cb func(*LogFactory)) fx.Option {
+func ProvideLogFactory(logger *log.Logger, cb func(*Factory)) fx.Option {
 	return fx.Provide(
-		func() *LogFactory {
-			logFactory := NewLogFactory(logger)
+		func() *Factory {
+			logFactory := NewFactory(logger)
 			if cb != nil {
 				cb(logFactory)
 			}

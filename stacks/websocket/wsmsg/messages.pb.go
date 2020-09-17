@@ -10,6 +10,7 @@ import (
 	context "context"
 	constants "github.com/bhbosman/gocommon/constants"
 	stream "github.com/bhbosman/gocommon/stream"
+	goprotoextra "github.com/bhbosman/goprotoextra"
 	proto "github.com/golang/protobuf/proto"
 	descriptor "github.com/golang/protobuf/protoc-gen-go/descriptor"
 	proto1 "google.golang.org/protobuf/proto"
@@ -278,26 +279,26 @@ const WebSocketMessageTypeCode uint32 = 2294276949
 //false
 //false
 type WebSocketMessageWrapper struct {
-	stream.BaseMessageWrapper
+	goprotoextra.BaseMessageWrapper
 	Data *WebSocketMessage
 }
 
-func (self *WebSocketMessageWrapper) Message() proto1.Message {
+func (self *WebSocketMessageWrapper) Message() interface{} {
 	return self.Data
 }
 
-func (self *WebSocketMessageWrapper) messageWrapper() stream.IMessageWrapper {
+func (self *WebSocketMessageWrapper) messageWrapper() interface{} {
 	return self
 }
 
 func NewWebSocketMessageWrapper(
 	cancelCtx context.Context,
 	cancelFunc context.CancelFunc,
-	toReactor stream.ToReactorFunc,
-	toConnection stream.ToConnectionFunc,
+	toReactor goprotoextra.ToReactorFunc,
+	toConnection goprotoextra.ToConnectionFunc,
 	data *WebSocketMessage) *WebSocketMessageWrapper {
 	return &WebSocketMessageWrapper{
-		BaseMessageWrapper: stream.NewBaseMessageWrapper(
+		BaseMessageWrapper: goprotoextra.NewBaseMessageWrapper(
 			cancelCtx,
 			cancelFunc,
 			toReactor,
@@ -315,9 +316,9 @@ var _ = stream.Register(
 		CreateWrapper: func(
 			cancelCtx context.Context,
 			cancelFunc context.CancelFunc,
-			toReactor stream.ToReactorFunc,
-			toConnection stream.ToConnectionFunc,
-			data proto1.Message) (stream.IMessageWrapper, error) {
+			toReactor goprotoextra.ToReactorFunc,
+			toConnection goprotoextra.ToConnectionFunc,
+			data proto1.Message) (goprotoextra.IMessageWrapper, error) {
 			if msg, ok := data.(*WebSocketMessage); ok {
 				return NewWebSocketMessageWrapper(
 					cancelCtx,

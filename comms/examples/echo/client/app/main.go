@@ -9,12 +9,15 @@ import (
 	"github.com/bhbosman/gocommon/comms/connectionManager/view"
 	echoClient "github.com/bhbosman/gocommon/comms/examples/echo/client/internal/components"
 	"github.com/bhbosman/gocommon/comms/http"
+	log2 "github.com/bhbosman/gocommon/log"
 	"go.uber.org/fx"
+	"log"
+	"os"
 )
 
 func main() {
 	app := fx.New(
-		fx.LogName("Main Application"),
+		log2.ProvideLogFactory(log.New(os.Stderr, "EchoClient: ", log.LstdFlags), nil),
 		connectionManager.RegisterDefaultConnectionManager(),
 		commsImpl.RegisterAllConnectionRelatedServices(),
 		app2.RegisterRootContext(),
@@ -22,13 +25,19 @@ func main() {
 		endpoints.RegisterConnectionManagerEndpoint(),
 		view.RegisterConnectionsHtmlTemplate(),
 		http.RegisterHttpHandler("http://127.0.0.1:8081"),
-
+		fx.Provide(
+			func(params struct {
+				fx.In
+				Factory *log2.Factory
+			}) *log2.SubSystemLogger {
+				return params.Factory.Create("Main")
+			}),
 		fx.Invoke(
 			func(params struct {
 				fx.In
 				Lifecycle      fx.Lifecycle
 				Apps           []*fx.App `group:"Apps"`
-				Logger         fx.ILogger
+				Logger         *log2.SubSystemLogger
 				RunTimeManager *app2.RunTimeManager
 			}) {
 				params.Lifecycle.Append(fx.Hook{

@@ -6,6 +6,7 @@ import (
 	"github.com/bhbosman/gocommon/app"
 	"github.com/bhbosman/gocommon/comms/common"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
+	"github.com/bhbosman/gocommon/log"
 	"go.uber.org/fx"
 )
 
@@ -18,9 +19,10 @@ func CommonComponents(
 	Manager *app.RunTimeManager,
 	ConnectionManager connectionManager.IConnectionManager,
 	connectionReactorFactoryName string,
+	logFactory *log.Factory,
 	userContext interface{}) fx.Option {
 	return fx.Options(
-		fx.Supply(ClientContextFactories, StackFactory, Manager),
+		fx.Supply(ClientContextFactories, StackFactory, Manager, logFactory),
 		fx.Provide(fx.Annotated{Name: UserContext, Target: func() interface{} {
 			return userContext
 		}}),

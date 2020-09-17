@@ -10,7 +10,7 @@ import (
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/gocommon/stacks/messageBreaker/internal"
-	"github.com/bhbosman/gocommon/stream"
+	"github.com/bhbosman/goprotoextra"
 	"reflect"
 )
 
@@ -117,7 +117,7 @@ func StackDefinition(
 						stackName,
 						rxgo.StreamDirectionInbound,
 						connectionManager,
-						func(ctx context.Context, i stream.ReadWriterSize) {
+						func(ctx context.Context, i goprotoextra.ReadWriterSize) {
 							if errorState {
 								stackCancelFunc("In error state", true, constants.InvalidState)
 								return
@@ -169,7 +169,7 @@ func StackDefinition(
 						stackName,
 						rxgo.StreamDirectionOutbound,
 						params.ConnectionManager,
-						func(ctx context.Context, i stream.ReadWriterSize) (stream.ReadWriterSize, error) {
+						func(ctx context.Context, i goprotoextra.ReadWriterSize) (goprotoextra.ReadWriterSize, error) {
 							if errorState {
 								stackCancelFunc("In error state", false, constants.InvalidState)
 								return nil, constants.InvalidState

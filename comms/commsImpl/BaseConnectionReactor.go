@@ -4,9 +4,9 @@ import (
 	"context"
 	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
+	"github.com/bhbosman/gocommon/log"
 	"github.com/bhbosman/gocommon/multiBlock"
-	"github.com/bhbosman/gocommon/stream"
-	"go.uber.org/fx"
+	"github.com/bhbosman/goprotoextra"
 	"net"
 	"net/url"
 )
@@ -18,9 +18,9 @@ type BaseConnectionReactor struct {
 	// have not been closed
 	CancelCtx         context.Context
 	CancelFunc        context.CancelFunc
-	Logger            fx.ILogger
-	ToConnection      stream.ToConnectionFunc
-	ToReactor         stream.ToReactorFunc
+	Logger            *log.SubSystemLogger
+	ToConnection      goprotoextra.ToConnectionFunc
+	ToReactor         goprotoextra.ToReactorFunc
 	Conn              net.Conn
 	ConnectionId      string
 	Url               *url.URL
@@ -30,7 +30,7 @@ type BaseConnectionReactor struct {
 }
 
 func NewBaseConnectionReactor(
-	logger fx.ILogger,
+	logger *log.SubSystemLogger,
 	name string,
 	cancelCtx context.Context,
 	cancelFunc context.CancelFunc,
@@ -50,8 +50,8 @@ func (self *BaseConnectionReactor) Init(
 	url *url.URL,
 	connectionId string,
 	connectionManager connectionManager.IConnectionManager,
-	toConnectionFunc stream.ToConnectionFunc,
-	toConnectionReactor stream.ToReactorFunc) (rxgo.NextExternalFunc, error) {
+	toConnectionFunc goprotoextra.ToConnectionFunc,
+	toConnectionReactor goprotoextra.ToReactorFunc) (rxgo.NextExternalFunc, error) {
 	self.Conn = conn
 	self.Url = url
 	self.UrlAsString = url.String()

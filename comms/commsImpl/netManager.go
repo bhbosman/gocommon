@@ -8,10 +8,13 @@ import (
 	"github.com/bhbosman/gocommon/comms/common"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
 	"github.com/bhbosman/gocommon/internal"
+	"github.com/bhbosman/gocommon/log"
 	"github.com/bhbosman/gocommon/stacks/defs"
-	"github.com/bhbosman/gocommon/stream"
+	"github.com/bhbosman/goprotoextra"
+	"github.com/bhbosman/gorxextra"
 	"go.uber.org/fx"
 	"io"
+	log2 "log"
 	"math"
 	"net"
 	"net/url"
@@ -22,23 +25,26 @@ type netManager struct {
 	connectionReactorFactories   *ConnectionReactorFactories
 	cancelCtx                    context.Context
 	cancelFunction               context.CancelFunc
-	logger                       fx.ILogger
+	logger                       *log.SubSystemLogger
 	stackFactoryFunction         TransportFactoryFunction
 	ConnectionReactorFactoryName string
 	Manager                      *app.RunTimeManager
 	connectionManager            connectionManager.IConnectionManager
 	url                          *url.URL
 	UserContext                  interface{}
+	logFactory                   *log.Factory
 }
 
 func (self *netManager) newConnectionInstance(connectionType common.ConnectionType, conn net.Conn) (*fx.App, context.Context) {
 	connectionName := fmt.Sprintf("Client Connection(%s-%s)", conn.RemoteAddr(), conn.LocalAddr())
+	l := self.logFactory.Create(connectionName)
 	var ctx context.Context
 	fxApp := fx.New(
 		fx.Populate(&ctx),
+		fx.Logger(l),
 		fx.StopTimeout(time.Hour),
-		fx.LogName(connectionName),
-		fx.Supply(self, self.connectionReactorFactories, self.stackFactoryFunction, self.Manager, self.url, connectionType),
+		//fx.LogName(connectionName),
+		fx.Supply(l, self, self.connectionReactorFactories, self.stackFactoryFunction, self.Manager, self.url, connectionType, self.logFactory),
 		fx.Provide(fx.Annotated{Target: func() connectionManager.IConnectionManager { return self.connectionManager }}),
 		fx.Provide(fx.Annotated{Target: func() connectionManager.IRegisterToConnectionManager { return self.connectionManager }}),
 		fx.Provide(fx.Annotated{Target: func() connectionManager.IObtainConnectionManagerInformation { return self.connectionManager }}),
@@ -52,6 +58,7 @@ func (self *netManager) newConnectionInstance(connectionType common.ConnectionTy
 		fx.Provide(func(netConnectionManager *netManager) (context.Context, context.CancelFunc) {
 			return context.WithCancel(netConnectionManager.cancelCtx)
 		}),
+
 		fx.Provide(fx.Annotated{Target: createClientContext}),
 		fx.Provide(fx.Annotated{Target: createStackDefinition}),
 		fx.Provide(fx.Annotated{Target: createStackCancelFunc}),
@@ -59,6 +66,7 @@ func (self *netManager) newConnectionInstance(connectionType common.ConnectionTy
 		fx.Provide(fx.Annotated{Target: createToConnectionFunc}),
 		fx.Provide(fx.Annotated{Target: createToReactorFunc}),
 		fx.Provide(fx.Annotated{Target: createChannel}),
+
 		fx.Invoke(invokeConnectionManager),
 		fx.Invoke(invokeLogger),
 		fx.Invoke(invokeChannel),
@@ -79,11 +87,12 @@ func newNetManager(
 	connectionReactorFactories *ConnectionReactorFactories,
 	cancelCtx context.Context,
 	cancelFunction context.CancelFunc,
-	logger fx.ILogger,
+	logger *log.SubSystemLogger,
 	stackFactoryFunction TransportFactoryFunction,
 	ConnectionReactorFactoryName string,
 	manager *app.RunTimeManager,
 	connectionManager connectionManager.IConnectionManager,
+	logFactory *log.Factory,
 	userContext interface{}) netManager {
 	return netManager{
 		connectionReactorFactories:   connectionReactorFactories,
@@ -96,6 +105,7 @@ func newNetManager(
 		connectionManager:            connectionManager,
 		url:                          url,
 		UserContext:                  userContext,
+		logFactory:                   logFactory,
 	}
 }
 
@@ -108,10 +118,12 @@ func createClientContext(
 		ConnectionManager            *ConnectionReactorFactories
 		ConnectionName               string `name:"ConnectionName"`
 		ConnectionReactorFactoryName string `name:"ConnectionReactorFactoryName"`
-		Logger                       fx.ILogger
+		Logger                       *log.SubSystemLogger
 		ClientContext                interface{} `name:"UserContext"`
 	}) (IConnectionReactor, error) {
-	params.Logger.Printf(fmt.Sprintf("createTransportLayer..."))
+	params.Logger.LogWithLevel(0, func(logger *log2.Logger) {
+		logger.Printf(fmt.Sprintf("createTransportLayer..."))
+	})
 	clientContext, err := params.ConnectionManager.CreateClientContext(
 		params.Logger,
 		params.ConnectionName,
@@ -120,15 +132,17 @@ func createClientContext(
 		params.ConnectionReactorFactoryName,
 		params.ClientContext)
 	if err != nil {
-		params.Logger.Printf(fmt.Sprintf("createTransportLayer..."))
+		params.Logger.LogWithLevel(0, func(logger *log2.Logger) {
+			logger.Printf(fmt.Sprintf("createTransportLayer..."))
+		})
 		return nil, err
 	}
 	return clientContext, nil
 }
 
-func createStackCancelFunc(cancelFunc context.CancelFunc, logger fx.ILogger) defs.CancelFunc {
+func createStackCancelFunc(cancelFunc context.CancelFunc, logger *log.SubSystemLogger) defs.CancelFunc {
 	return func(context string, inbound bool, err error) {
-		logger.Error(context, err)
+		_ = logger.ErrorWithDescription(context, err)
 		cancelFunc()
 	}
 }
@@ -137,7 +151,7 @@ func createStackDefinition(
 	params struct {
 		fx.In
 		ConnectionId         string `name:"ConnectionId"`
-		Logger               fx.ILogger
+		Logger               *log.SubSystemLogger
 		StackFactoryFunction TransportFactoryFunction
 		CancelCtx            context.Context
 		StackCancelFunc      defs.CancelFunc
@@ -145,7 +159,9 @@ func createStackDefinition(
 		ConnectionManager    connectionManager.IConnectionManager
 		ConnectionType       common.ConnectionType
 	}) (*defs.TwoWayPipeDefinition, error) {
-	params.Logger.Printf(fmt.Sprintf("createStackDefinition..."))
+	params.Logger.LogWithLevel(0, func(logger *log2.Logger) {
+		logger.Printf(fmt.Sprintf("createStackDefinition..."))
+	})
 
 	function, err := params.StackFactoryFunction(
 		params.ConnectionType,
@@ -195,7 +211,7 @@ func invokeLogger(
 	params struct {
 		fx.In
 		LifeCycle  fx.Lifecycle
-		Logger     fx.ILogger
+		Logger     *log.SubSystemLogger
 		CancelFunc context.CancelFunc
 		CancelCtx  context.Context
 	}) {
@@ -208,7 +224,8 @@ func invokeLogger(
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
-			return params.Logger.Close()
+			return nil
+			//return params.Logger.Close()
 		},
 	})
 }
@@ -239,7 +256,7 @@ func createToReactorFunc(
 		fx.In
 		CancelCtx context.Context
 		Ch        chan rxgo.Item
-	}) stream.ToReactorFunc {
+	}) goprotoextra.ToReactorFunc {
 	return func(inline bool, any interface{}) error {
 		err := params.CancelCtx.Err()
 		if err != nil {
@@ -248,12 +265,22 @@ func createToReactorFunc(
 		if !inline {
 			go func(any interface{}) {
 				item := rxgo.Of(rxgo.NewNextExternal(false, any))
-				_ = item.SendContextWithTimeOutAndRetries(params.CancelCtx, time.Millisecond*500, 5, params.Ch)
+				_ = gorxextra.SendContextWithTimeOutAndRetries(
+					item,
+					params.CancelCtx,
+					time.Millisecond*500,
+					5,
+					params.Ch)
 			}(any)
 			return nil
 		}
 		item := rxgo.Of(rxgo.NewNextExternal(false, any))
-		return item.SendContextWithTimeOutAndRetries(params.CancelCtx, time.Millisecond*500, 5, params.Ch)
+		return gorxextra.SendContextWithTimeOutAndRetries(
+			item,
+			params.CancelCtx,
+			time.Millisecond*500,
+			5,
+			params.Ch)
 	}
 }
 func createToConnectionFunc(
@@ -261,8 +288,8 @@ func createToConnectionFunc(
 		fx.In
 		TransportLayer *defs.TwoWayPipe
 		CancelCtx      context.Context
-	}) stream.ToConnectionFunc {
-	return func(rw stream.ReadWriterSize) error {
+	}) goprotoextra.ToConnectionFunc {
+	return func(rw goprotoextra.ReadWriterSize) error {
 		err := params.CancelCtx.Err()
 		if err != nil {
 			return err
@@ -277,12 +304,14 @@ func createTransportLayer(
 		ConnectionId      string `name:"ConnectionId"`
 		ConnectionManager connectionManager.IConnectionManager
 		Lifecycle         fx.Lifecycle
-		Logger            fx.ILogger
+		Logger            *log.SubSystemLogger
 		CancelCtx         context.Context
 		StackCancelFunc   defs.CancelFunc
 		Def               *defs.TwoWayPipeDefinition
 	}) (*defs.TwoWayPipe, error) {
-	params.Logger.Printf(fmt.Sprintf("createTransportLayer..."))
+	params.Logger.LogWithLevel(0, func(logger *log2.Logger) {
+		logger.Printf(fmt.Sprintf("createTransportLayer..."))
+	})
 	transportLayer, err := params.Def.Build(
 		params.ConnectionId,
 		params.ConnectionManager,
@@ -359,8 +388,8 @@ func invokeObservable(
 		ClientContext     IConnectionReactor
 		ConnectionId      string `name:"ConnectionId"`
 		ConnectionManager connectionManager.IConnectionManager
-		ToConnectionFunc  stream.ToConnectionFunc
-		ToReactorFunc     stream.ToReactorFunc
+		ToConnectionFunc  goprotoextra.ToConnectionFunc
+		ToReactorFunc     goprotoextra.ToReactorFunc
 		Obs               rxgo.Observable
 		CancelCtx         context.Context
 	}) {
@@ -416,7 +445,7 @@ func invokeInboundTransportLayer(
 				"InboundTransportLayer",
 				rxgo.StreamDirectionInbound,
 				params.ConnectionManager,
-				func(context context.Context, i stream.ReadWriterSize) {
+				func(context context.Context, i goprotoextra.ReadWriterSize) {
 					if context.Err() != nil {
 						return
 					}
@@ -454,7 +483,7 @@ func invokeOutBoundTransportLayer(
 				"Connection Write",
 				rxgo.StreamDirectionOutbound,
 				params.ConnectionManager,
-				func(context context.Context, i stream.ReadWriterSize) {
+				func(context context.Context, i goprotoextra.ReadWriterSize) {
 					if context.Err() != nil {
 						return
 					}
@@ -552,7 +581,7 @@ func invoke0007(
 				params.ConnectionId,
 				1000000,
 				"Connection Read",
-				func(rws stream.IReadWriterSize, cancelCtx context.Context, CancelFunc defs.CancelFunc) {
+				func(rws goprotoextra.IReadWriterSize, cancelCtx context.Context, CancelFunc defs.CancelFunc) {
 					err := params.TransportLayer.ReceiveIncomingData(rws)
 					if err != nil {
 						CancelFunc("Connection Read", true, err)
