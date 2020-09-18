@@ -21,14 +21,13 @@
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="GROUP_NODE:github" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:github/master" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="397a3b97-7c9b-4990-b49b-a268290dd503" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +116,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="github/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -131,34 +142,38 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="187" y="24" key="CommitChangelistDialog2" timestamp="1600414413063">
+    <state x="187" y="24" key="CommitChangelistDialog2" timestamp="1600415036557">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="187" y="24" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1600414413063" />
-    <state width="699" height="245" key="GridCell.Tab.0.bottom" timestamp="1600414855404">
+    <state x="187" y="24" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1600415036557" />
+    <state x="58" y="79" key="DiffContextDialog" timestamp="1600415033430">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="699" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600414855404" />
-    <state width="699" height="245" key="GridCell.Tab.0.center" timestamp="1600414855403">
+    <state x="58" y="79" key="DiffContextDialog/0.0.1440.900@0.0.1440.900" timestamp="1600415033430" />
+    <state width="699" height="245" key="GridCell.Tab.0.bottom" timestamp="1600415689875">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="699" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600414855403" />
-    <state width="699" height="245" key="GridCell.Tab.0.left" timestamp="1600414855401">
+    <state width="699" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600415689875" />
+    <state width="699" height="245" key="GridCell.Tab.0.center" timestamp="1600415689874">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="699" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600414855401" />
-    <state width="699" height="245" key="GridCell.Tab.0.right" timestamp="1600414855403">
+    <state width="699" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600415689874" />
+    <state width="699" height="245" key="GridCell.Tab.0.left" timestamp="1600415689873">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="699" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600414855403" />
+    <state width="699" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600415689873" />
+    <state width="699" height="245" key="GridCell.Tab.0.right" timestamp="1600415689874">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="699" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600415689874" />
     <state x="221" y="89" key="SettingsEditor" timestamp="1600404676061">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="221" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1600404676061" />
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1600414482533">
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1600415073682">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1600414482533" />
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1600415073682" />
     <state x="343" y="67" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1600414291723">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
