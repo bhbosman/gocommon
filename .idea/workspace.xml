@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="397a3b97-7c9b-4990-b49b-a268290dd503" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comms/connectionManager/ConnectionInformation.go" beforeDir="false" afterPath="$PROJECT_DIR$/comms/connectionManager/ConnectionInformation.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comms/connectionManager/connectionManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/comms/connectionManager/connectionManager.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comms/connectionManager/data.go" beforeDir="false" afterPath="$PROJECT_DIR$/comms/connectionManager/data.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comms/connectionManager/register.go" beforeDir="false" afterPath="$PROJECT_DIR$/comms/connectionManager/register.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,10 +96,10 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="187" y="24" key="CommitChangelistDialog2" timestamp="1600409419550">
+    <state x="187" y="24" key="CommitChangelistDialog2" timestamp="1600412787956">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="187" y="24" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1600409419550" />
+    <state x="187" y="24" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1600412787956" />
     <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1600412770086">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

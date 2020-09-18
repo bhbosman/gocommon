@@ -2,8 +2,8 @@ package connectionManager
 
 import (
 	"context"
-	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/cskr/pubsub"
+	"github.com/reactivex/rxgo/v2"
 	"go.uber.org/fx"
 )
 
