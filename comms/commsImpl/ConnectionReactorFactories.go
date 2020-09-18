@@ -2,8 +2,8 @@ package commsImpl
 
 import (
 	"context"
-	"github.com/bhbosman/gocommon/constants"
 	"github.com/bhbosman/gocommon/log"
+	"github.com/bhbosman/goerrors"
 	"go.uber.org/fx"
 )
 
@@ -21,7 +21,7 @@ func (self *ConnectionReactorFactories) CreateClientContext(
 	if factory, ok := self.m[name]; ok {
 		return factory.Create(ConnectionName, cancelCtx, cancelFunc, logger, userContext), nil
 	}
-	return nil, constants.InvalidParam
+	return nil, goerrors.InvalidParam
 }
 
 const ConnectionReactorFactoryConst = "ConnectionReactorFactory"
@@ -34,7 +34,7 @@ func newConnectionReactorFactories(
 	m := make(map[string]IConnectionReactorFactory)
 	for _, ccf := range params.Factories {
 		if _, ok := m[ccf.Name()]; ok {
-			return nil, constants.DuplicateKey
+			return nil, goerrors.DuplicateKey
 		}
 		m[ccf.Name()] = ccf
 	}

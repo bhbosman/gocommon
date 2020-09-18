@@ -3,9 +3,9 @@ package KillConnection
 import (
 	"context"
 	rxgo "github.com/ReactiveX/RxGo"
-	"github.com/bhbosman/gocommon/constants"
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
+	"github.com/bhbosman/goerrors"
 	"github.com/bhbosman/goprotoextra"
 	"time"
 )
@@ -16,7 +16,7 @@ func StackDefinition(
 	connectionManager rxgo.IPublishToConnectionManager,
 	opts ...rxgo.Option) (*defs.StackDefinition, error) {
 	if stackCancelFunc == nil {
-		return nil, constants.InvalidParam
+		return nil, goerrors.InvalidParam
 	}
 	const stackName = "KillConnection"
 	return &defs.StackDefinition{
@@ -26,7 +26,7 @@ func StackDefinition(
 				PipeDefinition: func(
 					params defs.PipeDefinitionParams) (rxgo.Observable, error) {
 					if stackCancelFunc == nil {
-						return nil, constants.InvalidParam
+						return nil, goerrors.InvalidParam
 					}
 					return params.Obs.(rxgo.InOutBoundObservable).MapInOutBound(
 						index,
@@ -46,7 +46,7 @@ func StackDefinition(
 			return defs.BoundDefinition{
 				PipeDefinition: func(params defs.PipeDefinitionParams) (rxgo.Observable, error) {
 					if stackCancelFunc == nil {
-						return nil, constants.InvalidParam
+						return nil, goerrors.InvalidParam
 					}
 					outBoundChannel = make(chan rxgo.Item)
 					_ = params.Obs.(rxgo.InOutBoundObservable).DoOnNextInOutBound(
@@ -67,7 +67,7 @@ func StackDefinition(
 							go func() {
 								outBoundChannel <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte("ERR:No Transport layer selected. Closing down connection\n")))
 								time.Sleep(time.Millisecond * 10)
-								stackCancelFunc("Kill Connection", false, constants.InvalidParam)
+								stackCancelFunc("Kill Connection", false, goerrors.InvalidParam)
 								return
 							}()
 						}

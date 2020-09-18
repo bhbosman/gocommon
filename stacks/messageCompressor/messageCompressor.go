@@ -5,10 +5,10 @@ import (
 	"context"
 	"encoding/binary"
 	rxgo "github.com/ReactiveX/RxGo"
+	"github.com/bhbosman/goerrors"
 	"github.com/bhbosman/goprotoextra"
 	"sync"
 
-	"github.com/bhbosman/gocommon/constants"
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"io"
@@ -20,7 +20,7 @@ func StackDefinition(
 	stackCancelFunc defs.CancelFunc,
 	opts ...rxgo.Option) (*defs.StackDefinition, error) {
 	if stackCancelFunc == nil {
-		return nil, constants.InvalidParam
+		return nil, goerrors.InvalidParam
 	}
 	const stackName = "Compression"
 	return &defs.StackDefinition{
@@ -34,7 +34,7 @@ func StackDefinition(
 			return defs.BoundDefinition{
 				PipeDefinition: func(params defs.PipeDefinitionParams) (rxgo.Observable, error) {
 					if stackCancelFunc == nil {
-						return nil, constants.InvalidParam
+						return nil, goerrors.InvalidParam
 					}
 					return params.Obs.(rxgo.InOutBoundObservable).MapInOutBound(
 						index,
@@ -90,7 +90,7 @@ func StackDefinition(
 			return defs.BoundDefinition{
 				PipeDefinition: func(params defs.PipeDefinitionParams) (rxgo.Observable, error) {
 					if stackCancelFunc == nil {
-						return nil, constants.InvalidParam
+						return nil, goerrors.InvalidParam
 					}
 					if err != nil {
 						return nil, err

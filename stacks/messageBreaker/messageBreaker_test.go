@@ -5,10 +5,10 @@ import (
 	"crypto/sha1"
 	"encoding/binary"
 	rxgo "github.com/ReactiveX/RxGo"
-	"github.com/bhbosman/gocommon/constants"
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/gocommon/stacks/messageBreaker/internal"
+	"github.com/bhbosman/goerrors"
 	"github.com/stretchr/testify/assert"
 	"io"
 	"sync"
@@ -64,7 +64,7 @@ func TestBuildBlocksInbound(t *testing.T) {
 			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}))
 			wg.Wait()
 			assert.Error(t, blockError)
-			assert.Equal(t, constants.InvalidSignature, blockError)
+			assert.Equal(t, goerrors.InvalidSignature, blockError)
 		})
 		t.Run("Inbound: Valid Signature", func(t *testing.T) {
 			wg := sync.WaitGroup{}

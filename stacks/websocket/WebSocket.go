@@ -5,12 +5,12 @@ import (
 	"fmt"
 	rxgo "github.com/ReactiveX/RxGo"
 	io2 "github.com/bhbosman/gocommon/comms/io"
-	"github.com/bhbosman/gocommon/constants"
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/gocommon/stacks/internal/connectionWrapper"
 	"github.com/bhbosman/gocommon/stacks/websocket/wsmsg"
 	"github.com/bhbosman/gocommon/stream"
+	"github.com/bhbosman/goerrors"
 	"github.com/bhbosman/goprotoextra"
 	"github.com/gobwas/ws"
 	"github.com/gobwas/ws/wsutil"
@@ -26,7 +26,7 @@ func StackDefinition(
 	connectionManager rxgo.IPublishToConnectionManager,
 	opts ...rxgo.Option) (*defs.StackDefinition, error) {
 	if stackCancelFunc == nil {
-		return nil, constants.InvalidParam
+		return nil, goerrors.InvalidParam
 	}
 
 	nextOutBoundPath := func(ctx context.Context, nextOutboundChannel chan rxgo.Item) connectionWrapper.ConnWrapperNext {
@@ -152,7 +152,7 @@ func StackDefinition(
 			return defs.BoundDefinition{
 				PipeDefinition: func(params defs.PipeDefinitionParams) (rxgo.Observable, error) {
 					if stackCancelFunc == nil {
-						return nil, constants.InvalidParam
+						return nil, goerrors.InvalidParam
 					}
 					_ = params.Obs.(rxgo.InOutBoundObservable).DoOnNextInOutBound(
 						index,
@@ -186,7 +186,7 @@ func StackDefinition(
 			return defs.BoundDefinition{
 				PipeDefinition: func(params defs.PipeDefinitionParams) (rxgo.Observable, error) {
 					if stackCancelFunc == nil {
-						return nil, constants.InvalidParam
+						return nil, goerrors.InvalidParam
 					}
 					_ = params.Obs.(rxgo.InOutBoundObservable).DoOnNextInOutBound(
 						index-1,

@@ -5,9 +5,9 @@ import (
 	"encoding/binary"
 	"fmt"
 	rxgo "github.com/ReactiveX/RxGo"
-	"github.com/bhbosman/gocommon/constants"
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
+	"github.com/bhbosman/goerrors"
 	"github.com/bhbosman/goprotoextra"
 )
 
@@ -16,7 +16,7 @@ func StackDefinition(
 	stackCancelFunc defs.CancelFunc,
 	opts ...rxgo.Option) (*defs.StackDefinition, error) {
 	if stackCancelFunc == nil {
-		return nil, constants.InvalidParam
+		return nil, goerrors.InvalidParam
 	}
 	const stackName = "MessageNumber"
 
@@ -26,7 +26,7 @@ func StackDefinition(
 			return defs.BoundDefinition{
 				PipeDefinition: func(params defs.PipeDefinitionParams) (rxgo.Observable, error) {
 					if stackCancelFunc == nil {
-						return nil, constants.InvalidParam
+						return nil, goerrors.InvalidParam
 					}
 					errorState := false
 					var number uint64 = 0
@@ -38,8 +38,8 @@ func StackDefinition(
 						params.ConnectionManager,
 						func(ctx context.Context, i goprotoextra.ReadWriterSize) (goprotoextra.ReadWriterSize, error) {
 							if errorState {
-								stackCancelFunc("In error state", true, constants.InvalidState)
-								return nil, constants.InvalidState
+								stackCancelFunc("In error state", true, goerrors.InvalidState)
+								return nil, goerrors.InvalidState
 							}
 							buffer := [8]byte{0, 0, 0, 0, 0, 0, 0, 0}
 							_, err := i.Read(buffer[:])
@@ -56,7 +56,7 @@ func StackDefinition(
 									true,
 									err)
 								errorState = true
-								return nil, constants.InvalidSequenceNumber
+								return nil, goerrors.InvalidSequenceNumber
 							}
 							return i, nil
 						},
@@ -68,7 +68,7 @@ func StackDefinition(
 			return defs.BoundDefinition{
 				PipeDefinition: func(params defs.PipeDefinitionParams) (rxgo.Observable, error) {
 					if stackCancelFunc == nil {
-						return nil, constants.InvalidParam
+						return nil, goerrors.InvalidParam
 					}
 					errorState := false
 					var number uint64 = 0
@@ -80,8 +80,8 @@ func StackDefinition(
 						params.ConnectionManager,
 						func(ctx context.Context, i goprotoextra.ReadWriterSize) (goprotoextra.ReadWriterSize, error) {
 							if errorState {
-								stackCancelFunc("In error state", true, constants.InvalidState)
-								return nil, constants.InvalidState
+								stackCancelFunc("In error state", true, goerrors.InvalidState)
+								return nil, goerrors.InvalidState
 							}
 							number++
 							buffer := [8]byte{}

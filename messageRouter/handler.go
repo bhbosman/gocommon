@@ -1,7 +1,7 @@
 package messageRouter
 
 import (
-	"github.com/bhbosman/gocommon/constants"
+	"github.com/bhbosman/goerrors"
 	"reflect"
 )
 
@@ -19,10 +19,10 @@ func NewMessageRouter() *MessageRouter {
 func (self *MessageRouter) Add(fn interface{}) error {
 	typeOf := reflect.TypeOf(fn)
 	if typeOf.Kind() != reflect.Func {
-		return constants.InvalidParam
+		return goerrors.InvalidParam
 	}
 	if typeOf.NumIn() != 1 {
-		return constants.InvalidParam
+		return goerrors.InvalidParam
 	}
 	paramType := typeOf.In(0)
 	self.m[paramType] = reflect.ValueOf(fn)

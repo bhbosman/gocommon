@@ -6,10 +6,10 @@ import (
 	"encoding/binary"
 	"fmt"
 	rxgo "github.com/ReactiveX/RxGo"
-	"github.com/bhbosman/gocommon/constants"
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/gocommon/stacks/messageBreaker/internal"
+	"github.com/bhbosman/goerrors"
 	"github.com/bhbosman/goprotoextra"
 	"reflect"
 )
@@ -20,7 +20,7 @@ func StackDefinition(
 	connectionManager rxgo.IPublishToConnectionManager,
 	opts ...rxgo.Option) (*defs.StackDefinition, error) {
 	if stackCancelFunc == nil {
-		return nil, constants.InvalidParam
+		return nil, goerrors.InvalidParam
 	}
 
 	marker := [4]byte{'B', 'V', 'I', 'S'}
@@ -33,7 +33,7 @@ func StackDefinition(
 			return defs.BoundDefinition{
 				PipeDefinition: func(params defs.PipeDefinitionParams) (rxgo.Observable, error) {
 					if stackCancelFunc == nil {
-						return nil, constants.InvalidParam
+						return nil, goerrors.InvalidParam
 					}
 					rw := multiBlock.NewReaderWriter()
 					state := internal.BuildMessageStateReadMessageSignature
@@ -55,7 +55,7 @@ func StackDefinition(
 									}
 									c := bytes.Compare(p[:], marker[:])
 									if c != 0 {
-										stackCancelFunc("Signature incorrect", true, constants.InvalidSignature)
+										stackCancelFunc("Signature incorrect", true, goerrors.InvalidSignature)
 										errorState = true
 										return
 									}
@@ -119,7 +119,7 @@ func StackDefinition(
 						connectionManager,
 						func(ctx context.Context, i goprotoextra.ReadWriterSize) {
 							if errorState {
-								stackCancelFunc("In error state", true, constants.InvalidState)
+								stackCancelFunc("In error state", true, goerrors.InvalidState)
 								return
 							}
 							switch v := i.(type) {
@@ -137,7 +137,7 @@ func StackDefinition(
 								stackCancelFunc(
 									fmt.Sprintf("Invalid type(%v) received", reflect.TypeOf(i).String()),
 									true,
-									constants.InvalidType)
+									goerrors.InvalidType)
 								errorState = true
 								return
 							}
@@ -160,7 +160,7 @@ func StackDefinition(
 			return defs.BoundDefinition{
 				PipeDefinition: func(params defs.PipeDefinitionParams) (rxgo.Observable, error) {
 					if stackCancelFunc == nil {
-						return nil, constants.InvalidParam
+						return nil, goerrors.InvalidParam
 					}
 					errorState := false
 					return params.Obs.(rxgo.InOutBoundObservable).MapInOutBound(
@@ -171,8 +171,8 @@ func StackDefinition(
 						params.ConnectionManager,
 						func(ctx context.Context, i goprotoextra.ReadWriterSize) (goprotoextra.ReadWriterSize, error) {
 							if errorState {
-								stackCancelFunc("In error state", false, constants.InvalidState)
-								return nil, constants.InvalidState
+								stackCancelFunc("In error state", false, goerrors.InvalidState)
+								return nil, goerrors.InvalidState
 							}
 							block := make([]byte, 8)
 							binary.LittleEndian.PutUint32(block[0:4], markerAsUInt32)

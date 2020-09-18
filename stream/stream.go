@@ -3,8 +3,8 @@ package stream
 import (
 	"context"
 	"encoding/binary"
-	"github.com/bhbosman/gocommon/constants"
 	"github.com/bhbosman/gocommon/multiBlock"
+	"github.com/bhbosman/goerrors"
 	"github.com/bhbosman/goprotoextra"
 	"google.golang.org/protobuf/proto"
 )
@@ -24,7 +24,7 @@ func Marshall(m proto.Message) (stm goprotoextra.ReadWriterSize, err error) {
 		stm = multiBlock.NewReaderWriterWithBlocks(tcBytes[:], marshallBytes)
 		return stm, err
 	}
-	return nil, constants.InvalidParam
+	return nil, goerrors.InvalidParam
 }
 
 func UnMarshal(
@@ -45,7 +45,7 @@ func UnMarshal(
 		}
 		return r.CreateWrapper(cancelCtx, cancelFunc, toReactor, toConnection, msg)
 	}
-	return nil, constants.InvalidParam
+	return nil, goerrors.InvalidParam
 }
 
 func UnMarshalMessage(rws goprotoextra.ReadWriterSize, m proto.Message) error {
@@ -59,11 +59,11 @@ func UnMarshalMessage(rws goprotoextra.ReadWriterSize, m proto.Message) error {
 		}
 		tcFromStream := binary.LittleEndian.Uint32(tcBytes[0:4])
 		if tc.TypeCode() != tcFromStream {
-			return constants.InvalidParam
+			return goerrors.InvalidParam
 		}
 		n := binary.LittleEndian.Uint32(tcBytes[4:8])
 		if n < uint32(rws.Size()) {
-			return constants.InvalidParam
+			return goerrors.InvalidParam
 		}
 		data := make([]byte, n)
 		nn, err := rws.Read(data)
@@ -71,7 +71,7 @@ func UnMarshalMessage(rws goprotoextra.ReadWriterSize, m proto.Message) error {
 			return err
 		}
 		if uint32(nn) != n {
-			return constants.InvalidParam
+			return goerrors.InvalidParam
 		}
 
 		err = proto.Unmarshal(data, m)
@@ -80,7 +80,7 @@ func UnMarshalMessage(rws goprotoextra.ReadWriterSize, m proto.Message) error {
 		}
 		return nil
 	}
-	return constants.InvalidParam
+	return goerrors.InvalidParam
 }
 
 type CreateMessageWrapperFunc func(

@@ -8,8 +8,8 @@ package wsmsg
 
 import (
 	context "context"
-	constants "github.com/bhbosman/gocommon/constants"
 	stream "github.com/bhbosman/gocommon/stream"
+	"github.com/bhbosman/goerrors"
 	goprotoextra "github.com/bhbosman/goprotoextra"
 	proto "github.com/golang/protobuf/proto"
 	descriptor "github.com/golang/protobuf/protoc-gen-go/descriptor"
@@ -327,5 +327,5 @@ var _ = stream.Register(
 					toConnection,
 					msg), nil
 			}
-			return nil, constants.InvalidParam
+			return nil, goerrors.InvalidParam
 		}})

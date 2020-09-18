@@ -3,7 +3,7 @@ package connectionManager
 import (
 	"context"
 	rxgo "github.com/ReactiveX/RxGo"
-	"github.com/bhbosman/gocommon/constants"
+	"github.com/bhbosman/goerrors"
 	"github.com/cskr/pubsub"
 	"time"
 )
@@ -106,7 +106,7 @@ func (self *Impl) GetConnections(ctx context.Context) ([]*ConnectionInformation,
 			return v, nil
 		}
 	}
-	return nil, constants.InvalidParam
+	return nil, goerrors.InvalidParam
 }
 
 func (self *Impl) NameConnection(id string, connectionName string) error {
