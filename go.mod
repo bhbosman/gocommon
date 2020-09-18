@@ -1,0 +1,28 @@
+module github.com/bhbosman/gocommon
+
+go 1.15
+
+require (
+	github.com/ReactiveX/RxGo v1.0.0
+	github.com/bhbosman/goConnect v0.0.0-20200914060249-e8bb63c8db28 // indirect
+	github.com/bhbosman/goprotoextra v0.0.1
+	github.com/bhbosman/gorxextra v0.0.0-20200917224007-8f45f1880c46
+	github.com/bhbosman/rxgo/v2 v2.1.1-0.20200918045653-8f289de0d2ff // indirect
+	github.com/cskr/pubsub v1.0.2
+	github.com/gobwas/httphead v0.0.0-20180130184737-2c6c146eadee // indirect
+	github.com/gobwas/pool v0.2.1 // indirect
+	github.com/gobwas/ws v1.0.4
+	github.com/golang/mock v1.4.4
+	github.com/golang/protobuf v1.4.2
+	github.com/google/uuid v1.1.2
+	github.com/gorilla/mux v1.8.0
+	github.com/icza/gox v0.0.0-20200702115100-7dc3510ae515
+	github.com/reactivex/rxgo/v2 v2.1.0
+	github.com/stretchr/testify v1.6.1
+	go.uber.org/fx v1.13.1
+	go.uber.org/multierr v1.6.0
+	golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208
+	google.golang.org/protobuf v1.25.0
+)
+
+replace github.com/bhbosman/rxgo/v2 v2.1.1-0.20200918045653-8f289de0d2ff => github.com/reactivex/rxgo/v2 v2.1.0
