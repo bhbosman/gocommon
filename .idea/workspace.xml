@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="397a3b97-7c9b-4990-b49b-a268290dd503" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comms/connectionManager/ConnectionInformation.go" beforeDir="false" afterPath="$PROJECT_DIR$/comms/connectionManager/ConnectionInformation.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,32 +88,33 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="WIP" />
+    <option name="LAST_COMMIT_MESSAGE" value="WIP" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="187" y="24" key="CommitChangelistDialog2" timestamp="1600404988551">
+    <state x="187" y="24" key="CommitChangelistDialog2" timestamp="1600405693676">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="187" y="24" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1600404988551" />
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1600405651797">
+    <state x="187" y="24" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1600405693676" />
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1600409374205">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600405651797" />
-    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1600405651796">
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600409374205" />
+    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1600409374203">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600405651796" />
-    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1600405651795">
+    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600409374203" />
+    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1600409374202">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600405651795" />
-    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1600405651797">
+    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600409374202" />
+    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1600409374204">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600405651797" />
+    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600409374204" />
     <state x="221" y="89" key="SettingsEditor" timestamp="1600404676061">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -121,5 +123,9 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="421" y="176" width="598" height="548" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1600405518080" />
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1600409294373">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1600409294373" />
   </component>
 </project>
