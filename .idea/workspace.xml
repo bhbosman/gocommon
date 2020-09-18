@@ -21,12 +21,15 @@
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="GROUP_NODE:github" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:github/master" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="397a3b97-7c9b-4990-b49b-a268290dd503" name="Default Changelist" comment="WIP" />
+    <list default="true" id="397a3b97-7c9b-4990-b49b-a268290dd503" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,7 +57,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="go.vgo" />
   </component>
-  <component name="RunManager" selected="Go Build.go build github.com/bhbosman/gocommon/comms">
+  <component name="RunManager" selected="Go Build.go build github.com/bhbosman/gocommon/Services">
     <configuration name="go build github.com/bhbosman/gocommon/Services" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="gocommon" />
       <working_directory value="$PROJECT_DIR$" />
@@ -63,27 +66,27 @@
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
-    <configuration name="go build github.com/bhbosman/gocommon/common" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="gocommon" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="github.com/bhbosman/gocommon/common" />
-      <directory value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build github.com/bhbosman/gocommon/comms" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="gocommon" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="github.com/bhbosman/gocommon/comms" />
-      <directory value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
     <configuration name="go build github.com/bhbosman/gocommon/internal" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="gocommon" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
       <package value="github.com/bhbosman/gocommon/internal" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build github.com/bhbosman/gocommon/log" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="gocommon" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/bhbosman/gocommon/log" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build github.com/bhbosman/gocommon/messageRouter" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="gocommon" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/bhbosman/gocommon/messageRouter" />
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
@@ -97,11 +100,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build github.com/bhbosman/gocommon/comms" />
         <item itemvalue="Go Build.go build github.com/bhbosman/gocommon/Services" />
         <item itemvalue="Go Build.go build github.com/bhbosman/gocommon/multiBlock" />
+        <item itemvalue="Go Build.go build github.com/bhbosman/gocommon/messageRouter" />
+        <item itemvalue="Go Build.go build github.com/bhbosman/gocommon/log" />
         <item itemvalue="Go Build.go build github.com/bhbosman/gocommon/internal" />
-        <item itemvalue="Go Build.go build github.com/bhbosman/gocommon/common" />
       </list>
     </recent_temporary>
   </component>
@@ -114,19 +117,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="github/master" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -140,38 +131,42 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="187" y="24" key="CommitChangelistDialog2" timestamp="1600414135615">
+    <state x="187" y="24" key="CommitChangelistDialog2" timestamp="1600414413063">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="187" y="24" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1600414135615" />
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1600412918445">
+    <state x="187" y="24" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1600414413063" />
+    <state width="699" height="245" key="GridCell.Tab.0.bottom" timestamp="1600414855404">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600412918445" />
-    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1600412918443">
+    <state width="699" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600414855404" />
+    <state width="699" height="245" key="GridCell.Tab.0.center" timestamp="1600414855403">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600412918443" />
-    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1600412918442">
+    <state width="699" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600414855403" />
+    <state width="699" height="245" key="GridCell.Tab.0.left" timestamp="1600414855401">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600412918442" />
-    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1600412918444">
+    <state width="699" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600414855401" />
+    <state width="699" height="245" key="GridCell.Tab.0.right" timestamp="1600414855403">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600412918444" />
+    <state width="699" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600414855403" />
     <state x="221" y="89" key="SettingsEditor" timestamp="1600404676061">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="221" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1600404676061" />
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1600413159632">
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1600414482533">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1600413159632" />
-    <state x="421" y="176" width="598" height="548" key="find.popup" timestamp="1600405518080">
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1600414482533" />
+    <state x="343" y="67" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1600414291723">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="421" y="176" width="598" height="548" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1600405518080" />
+    <state x="343" y="67" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1440.900@0.0.1440.900" timestamp="1600414291723" />
+    <state x="421" y="176" width="598" height="548" key="find.popup" timestamp="1600414903778">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="421" y="176" width="598" height="548" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1600414903778" />
     <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1600409294373">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

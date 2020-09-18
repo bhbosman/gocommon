@@ -6,7 +6,7 @@ require (
 	github.com/ReactiveX/RxGo v1.0.0
 	github.com/bhbosman/goerrors v0.0.0-20200918064252-e47717b09c4f
 	github.com/bhbosman/goprotoextra v0.0.1
-	github.com/bhbosman/gorxextra v0.0.0-20200917224007-8f45f1880c46
+	github.com/bhbosman/gorxextra v0.0.0-20200918070301-48dbd8b934dc
 	github.com/cskr/pubsub v1.0.2
 	github.com/gobwas/httphead v0.0.0-20180130184737-2c6c146eadee // indirect
 	github.com/gobwas/pool v0.2.1 // indirect
@@ -24,6 +24,4 @@ require (
 	google.golang.org/protobuf v1.25.0
 )
 
-replace (
-	github.com/reactivex/rxgo/v2 v2.1.0 => github.com/bhbosman/rxgo/v2 v2.1.1-0.20200918045653-8f289de0d2ff
-)
+replace github.com/reactivex/rxgo/v2 v2.1.0 => github.com/bhbosman/rxgo/v2 v2.1.1-0.20200918073619-601ce01f6d06
