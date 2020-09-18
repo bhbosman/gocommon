@@ -2,7 +2,6 @@ package commsImpl
 
 import (
 	"context"
-	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/gocommon/comms/common"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
 	"github.com/bhbosman/gocommon/stacks/Bottom"
@@ -14,6 +13,7 @@ import (
 	"github.com/bhbosman/gocommon/stacks/messageNumber"
 	"github.com/bhbosman/gocommon/stacks/tlsConnection"
 	"github.com/bhbosman/gocommon/stacks/websocket"
+	"github.com/reactivex/rxgo/v2"
 )
 
 type TransportFactoryFunction func(

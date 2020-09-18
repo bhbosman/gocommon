@@ -2,10 +2,10 @@ package internal
 
 import (
 	"context"
-	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/goprotoextra"
+	"github.com/reactivex/rxgo/v2"
 	"net"
 	"time"
 )

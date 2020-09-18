@@ -2,11 +2,11 @@ package commsImpl
 
 import (
 	"context"
-	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/gocommon/app"
 	"github.com/bhbosman/gocommon/comms/common"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
 	"github.com/bhbosman/gocommon/log"
+	"github.com/reactivex/rxgo/v2"
 	"go.uber.org/fx"
 )
 

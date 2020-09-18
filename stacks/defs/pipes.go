@@ -2,7 +2,7 @@ package defs
 
 import (
 	"context"
-	rxgo "github.com/ReactiveX/RxGo"
+	"github.com/reactivex/rxgo/v2"
 	"net"
 	"net/url"
 )

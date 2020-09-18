@@ -3,7 +3,6 @@ package commsImpl
 import (
 	"context"
 	"fmt"
-	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/gocommon/app"
 	"github.com/bhbosman/gocommon/comms/common"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
@@ -12,6 +11,7 @@ import (
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/goprotoextra"
 	"github.com/bhbosman/gorxextra"
+	"github.com/reactivex/rxgo/v2"
 	"go.uber.org/fx"
 	"io"
 	log2 "log"

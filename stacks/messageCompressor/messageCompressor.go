@@ -4,9 +4,9 @@ import (
 	"compress/flate"
 	"context"
 	"encoding/binary"
-	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/goerrors"
 	"github.com/bhbosman/goprotoextra"
+	"github.com/reactivex/rxgo/v2"
 	"sync"
 
 	"github.com/bhbosman/gocommon/multiBlock"

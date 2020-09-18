@@ -2,10 +2,10 @@ package Top
 
 import (
 	"context"
-	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/goerrors"
 	"github.com/bhbosman/goprotoextra"
+	"github.com/reactivex/rxgo/v2"
 )
 
 func StackDefinition() (*defs.StackDefinition, error) {

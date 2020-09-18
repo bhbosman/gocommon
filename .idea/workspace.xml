@@ -26,7 +26,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="397a3b97-7c9b-4990-b49b-a268290dd503" name="Default Changelist" comment="" />
+    <list default="true" id="397a3b97-7c9b-4990-b49b-a268290dd503" name="Default Changelist" comment="WIP" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -140,10 +140,10 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="187" y="24" key="CommitChangelistDialog2" timestamp="1600412983684">
+    <state x="187" y="24" key="CommitChangelistDialog2" timestamp="1600414135615">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="187" y="24" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1600412983684" />
+    <state x="187" y="24" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1600414135615" />
     <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1600412918445">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

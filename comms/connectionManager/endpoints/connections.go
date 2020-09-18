@@ -2,9 +2,9 @@ package endpoints
 
 import (
 	"context"
-	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
 	"github.com/bhbosman/gocommon/comms/connectionManager/endpoints/internal"
+	"github.com/reactivex/rxgo/v2"
 	"html/template"
 	"net/http"
 	"sort"

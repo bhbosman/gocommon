@@ -3,7 +3,6 @@ package websocket
 import (
 	"context"
 	"fmt"
-	rxgo "github.com/ReactiveX/RxGo"
 	io2 "github.com/bhbosman/gocommon/comms/io"
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
@@ -14,6 +13,7 @@ import (
 	"github.com/bhbosman/goprotoextra"
 	"github.com/gobwas/ws"
 	"github.com/gobwas/ws/wsutil"
+	"github.com/reactivex/rxgo/v2"
 	"go.uber.org/multierr"
 	"io"
 	"net"

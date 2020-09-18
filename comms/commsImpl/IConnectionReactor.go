@@ -2,10 +2,10 @@ package commsImpl
 
 import (
 	"context"
-	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
 	"github.com/bhbosman/gocommon/log"
 	"github.com/bhbosman/goprotoextra"
+	"github.com/reactivex/rxgo/v2"
 	"net"
 	"net/url"
 )

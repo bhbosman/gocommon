@@ -9,12 +9,12 @@ import (
 	"github.com/bhbosman/goprotoextra"
 	"sync"
 
-	rxgo "github.com/ReactiveX/RxGo"
 	"github.com/bhbosman/gocommon/comms/common"
 	io2 "github.com/bhbosman/gocommon/comms/io"
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/gocommon/stacks/internal/connectionWrapper"
+	"github.com/reactivex/rxgo/v2"
 
 	"go.uber.org/multierr"
 	"io"
