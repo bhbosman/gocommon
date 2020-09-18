@@ -2,9 +2,9 @@ package connectionManager
 
 import (
 	"context"
-	ddd "github.com/bhbosman/rxgo/v2"
+
 	"github.com/icza/gox/fmtx"
-	//"github.com/reactivex/rxgo/v2"
+	"github.com/reactivex/rxgo/v2"
 	"sync"
 	"time"
 )
@@ -12,7 +12,7 @@ import (
 type StackPropertyKey struct {
 	Index     int
 	Name      string
-	Direction ddd.StreamDirection
+	Direction rxgo.StreamDirection
 }
 
 type StackPropertyValue struct {
