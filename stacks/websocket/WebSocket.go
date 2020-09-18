@@ -50,6 +50,7 @@ func StackDefinition(
 			return n, nil
 		}
 	}
+
 	sendPing := func(ctx context.Context, nextOutboundChannel chan rxgo.Item) {
 		msg := &wsmsg.WebSocketMessage{
 			OpCode: wsmsg.WebSocketMessage_OpPing,
@@ -61,8 +62,25 @@ func StackDefinition(
 		item := rxgo.Of(marshall)
 		item.SendContext(ctx, nextOutboundChannel)
 	}
+	LastPongReceived := time.Now()
+	triggerPingLoop := func(cancelContext context.Context, nextOutboundChannel chan rxgo.Item) {
+		ticker := time.NewTicker(time.Second * 5)
+		defer ticker.Stop()
+		for true {
+			select {
+			case <-cancelContext.Done():
+				return
+			case <-ticker.C:
+				if time.Now().Sub(LastPongReceived) > time.Second*10 {
+					stackCancelFunc("pong time out", true, goerrors.TimeOut)
+					return
+				}
+				sendPing(cancelContext, nextOutboundChannel)
+			}
+		}
+	}
 
-	connectionLoop := func(conn net.Conn, ctx context.Context, nextInBoundChannel, tempStep chan rxgo.Item) {
+	connectionLoop := func(conn net.Conn, ctx context.Context, nextInBoundChannel chan rxgo.Item) {
 		sendMessage := func(message *wsmsg.WebSocketMessage) {
 			stm, err := stream.Marshall(message)
 			if err != nil {
@@ -76,14 +94,8 @@ func StackDefinition(
 			Message: nil,
 		}
 		sendMessage(&message)
-		var lastUpdate time.Time
-		for {
-			now := time.Now()
-			if now.Sub(lastUpdate) >= time.Second*30 {
-				lastUpdate = now
-				sendPing(ctx, tempStep)
 
-			}
+		for {
 			msgs, err := wsutil.ReadServerMessage(conn, nil)
 			if err != nil {
 				return
@@ -126,6 +138,7 @@ func StackDefinition(
 					}
 					continue
 				case ws.OpPong:
+					_ = LastPongReceived.UnmarshalBinary(msg.Payload)
 					continue
 				default:
 					continue
@@ -224,7 +237,8 @@ func StackDefinition(
 											return
 										}
 									case wsmsg.WebSocketMessage_OpPing:
-										err := wsutil.WriteClientMessage(upgradedConnection, ws.OpPing, ws.CompiledPing)
+										binary, _ := time.Now().MarshalBinary()
+										err := wsutil.WriteClientMessage(upgradedConnection, ws.OpPing, binary)
 										if err != nil {
 											stackCancelFunc("creating ping payload", false, err)
 											return
@@ -286,7 +300,9 @@ func StackDefinition(
 				if ctx.Err() != nil {
 					return nil, ctx.Err()
 				}
-				go connectionLoop(upgradedConnection, ctx, nextInBoundChannel, tempStep)
+
+				go connectionLoop(upgradedConnection, ctx, nextInBoundChannel)
+				go triggerPingLoop(ctx, tempStep)
 				return upgradedConnection, ctx.Err()
 			},
 			End: func() error {
