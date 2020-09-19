@@ -3,6 +3,7 @@ package websocket
 import (
 	"context"
 	"fmt"
+	"github.com/bhbosman/gocommon/comms/common"
 	io2 "github.com/bhbosman/gocommon/comms/io"
 	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
@@ -22,6 +23,7 @@ import (
 )
 
 func StackDefinition(
+	connectionType common.ConnectionType,
 	stackCancelFunc defs.CancelFunc,
 	connectionManager rxgo.IPublishToConnectionManager,
 	opts ...rxgo.Option) (*defs.StackDefinition, error) {

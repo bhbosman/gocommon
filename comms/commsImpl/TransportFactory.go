@@ -61,7 +61,7 @@ func (self *TransportFactory) CreateWebSocket(
 		return Top.StackDefinition()
 	})
 	result.AddStackDefinitionFunc(func() (*defs.StackDefinition, error) {
-		return websocket.StackDefinition(stackCancelFunc, connectionManager, opts...)
+		return websocket.StackDefinition(connectionType, stackCancelFunc, connectionManager, opts...)
 	})
 	result.AddStackDefinitionFunc(func() (*defs.StackDefinition, error) {
 		return Bottom.StackDefinition()
