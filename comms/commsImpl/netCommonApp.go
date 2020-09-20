@@ -19,13 +19,9 @@ func CommonComponents(
 	Manager *app.RunTimeManager,
 	ConnectionManager connectionManager.IConnectionManager,
 	connectionReactorFactoryName string,
-	logFactory *log.Factory,
-	userContext interface{}) fx.Option {
+	logFactory *log.Factory) fx.Option {
 	return fx.Options(
 		fx.Supply(ClientContextFactories, StackFactory, Manager, logFactory),
-		fx.Provide(fx.Annotated{Name: UserContext, Target: func() interface{} {
-			return userContext
-		}}),
 		fx.Provide(fx.Annotated{Target: common.CreateUrl(url)}),
 		fx.Provide(fx.Annotated{Name: "StackName", Target: CreateStringContext(stackName)}),
 		fx.Provide(fx.Annotated{Name: ConnectionReactorFactoryName, Target: CreateStringContext(connectionReactorFactoryName)}),

@@ -9,7 +9,7 @@ type netConnWithSemaphoreWrapper struct {
 	}
 }
 
-func newNetConnWithSemaphoreWrapper(
+func NewNetConnWithSemaphoreWrapper(
 	conn net.Conn,
 	releaseSemaphore interface {
 		Release(int64)

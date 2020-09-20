@@ -1,37 +1,37 @@
-package commsImpl
+package netDial
 
 import (
 	"context"
 	"fmt"
 	"github.com/bhbosman/gocommon/app"
+	"github.com/bhbosman/gocommon/comms/commsImpl"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
 	"github.com/bhbosman/gocommon/log"
 	"go.uber.org/fx"
-	"time"
 )
 
-type NetDialAppFuncInParams struct {
+type AppFuncInParams struct {
 	fx.In
-	ClientContextFactories *ConnectionReactorFactories
+	ClientContextFactories *commsImpl.ConnectionReactorFactories
 	ParentContext          context.Context `name:"Application"`
 	Lifecycle              fx.Lifecycle
-	StackFactory           *TransportFactory
+	StackFactory           *commsImpl.TransportFactory
 	Manager                *app.RunTimeManager
 	ConnectionManager      connectionManager.IConnectionManager
 	LogFactory             *log.Factory
 }
+type AppFunc func(params AppFuncInParams) (*fx.App, error)
 
 func NewNetDialApp(
 	connectionName string,
 	url string,
 	stackName string,
 	userContextFactoryName string,
-	userContext interface{}) NewNetDialAppFunc {
-	return func(params NetDialAppFuncInParams) (*fx.App, error) {
+	options ...DialAppSettingsApply) AppFunc {
+	return func(params AppFuncInParams) (*fx.App, error) {
 		return fx.New(
-			fx.StopTimeout(time.Hour),
-			//fx.LogName(fmt.Sprintf("%v", connectionName)),
-			CommonComponents(
+			fx.Supply(options),
+			commsImpl.CommonComponents(
 				url,
 				stackName,
 				params.ClientContextFactories,
@@ -40,14 +40,13 @@ func NewNetDialApp(
 				params.Manager,
 				params.ConnectionManager,
 				userContextFactoryName,
-				params.LogFactory,
-				userContext),
+				params.LogFactory),
 			fx.Provide(
 				func(params struct {
 					fx.In
 					Factory *log.Factory
 				}) *log.SubSystemLogger {
-					return params.Factory.Create(fmt.Sprintf("Dialer for %v", url))
+					return params.Factory.Create(fmt.Sprintf("Dialer for %v", connectionName))
 				}),
 			fx.Provide(fx.Annotated{Target: newNetDialManager}),
 			fx.Invoke(
@@ -65,3 +64,4 @@ func NewNetDialApp(
 		), nil
 	}
 }
+

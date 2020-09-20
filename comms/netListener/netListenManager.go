@@ -1,9 +1,10 @@
-package commsImpl
+package netListener
 
 import (
 	"context"
 	"github.com/bhbosman/gocommon/app"
 	"github.com/bhbosman/gocommon/comms/common"
+	"github.com/bhbosman/gocommon/comms/commsImpl"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
 	"github.com/bhbosman/gocommon/log"
 	"go.uber.org/fx"
@@ -14,7 +15,7 @@ import (
 )
 
 type netListenManager struct {
-	netManager
+	commsImpl.NetManager
 	listener interface {
 		Accept() (net.Conn, error)
 	}
@@ -26,7 +27,7 @@ func (self *netListenManager) listenForNewConnections() {
 		sem := semaphore.NewWeighted(512)
 		for {
 			n++
-			self.logger.LogWithLevel(0, func(logger *log2.Logger) {
+			self.Logger.LogWithLevel(0, func(logger *log2.Logger) {
 				logger.Printf("Trying to accept connections #%v. ", n)
 			})
 			conn, err := self.Accept()
@@ -34,10 +35,10 @@ func (self *netListenManager) listenForNewConnections() {
 				return
 			}
 			if sem.TryAcquire(1) {
-				self.logger.LogWithLevel(0, func(logger *log2.Logger) {
+				self.Logger.LogWithLevel(0, func(logger *log2.Logger) {
 					logger.Printf("Accepted connection...")
 				})
-				conn = newNetConnWithSemaphoreWrapper(conn, sem)
+				conn = commsImpl.NewNetConnWithSemaphoreWrapper(conn, sem)
 				self.acceptNewClientConnection(conn)
 				continue
 			}
@@ -49,10 +50,10 @@ func (self *netListenManager) listenForNewConnections() {
 
 func (self *netListenManager) acceptNewClientConnection(conn net.Conn) {
 	go func(conn net.Conn) {
-		self.logger.LogWithLevel(0, func(logger *log2.Logger) {
+		self.Logger.LogWithLevel(0, func(logger *log2.Logger) {
 			logger.Printf("Accepted %s-%s", conn.RemoteAddr(), conn.LocalAddr())
 		})
-		connectionApp, ctx := self.newConnectionInstance(common.ServerConnection, conn)
+		connectionApp, ctx := self.NewConnectionInstance(common.ServerConnection, conn)
 		err := connectionApp.Err()
 		if err != nil {
 			_ = conn.Close()
@@ -72,7 +73,6 @@ func (self *netListenManager) acceptNewClientConnection(conn net.Conn) {
 }
 
 type NewNetListenAppFunc func(params NetListenAppFuncInParams) (*fx.App, error)
-type NewNetDialAppFunc func(params NetDialAppFuncInParams) (*fx.App, error)
 
 func (self *netListenManager) Accept() (net.Conn, error) {
 	return self.listener.Accept()
@@ -83,19 +83,24 @@ func newNetListenManager(
 		fx.In
 		Url                        *url.URL
 		Listener                   net.Listener
-		ConnectionReactorFactories *ConnectionReactorFactories
+		ConnectionReactorFactories *commsImpl.ConnectionReactorFactories
 		ConnectionManager          connectionManager.IConnectionManager
 		CancelCtx                  context.Context
 		CancelFunction             context.CancelFunc
-		StackFactoryFunction       TransportFactoryFunction
+		StackFactoryFunction       commsImpl.TransportFactoryFunction
 		Logger                     *log.SubSystemLogger
 		ClientContextFactoryName   string      `name:"ConnectionReactorFactoryName"`
-		ClientContext              interface{} `name:"UserContext"`
+		//ClientContext              interface{} `name:"UserContext"`
 		Manager                    *app.RunTimeManager
 		LogFactory                 *log.Factory
+		Settings                   []ListenAppSettingsApply
 	}) *netListenManager {
+	netListenSettings := &netListenManagerSettings{}
+	for _, setting := range params.Settings {
+		setting.apply(netListenSettings)
+	}
 	return &netListenManager{
-		netManager: newNetManager(
+		NetManager: commsImpl.NewNetManager(
 			params.Url,
 			params.ConnectionReactorFactories,
 			params.CancelCtx,
@@ -106,7 +111,7 @@ func newNetListenManager(
 			params.Manager,
 			params.ConnectionManager,
 			params.LogFactory,
-			params.ClientContext),
+			netListenSettings.userContext),
 		listener: params.Listener,
 	}
 }

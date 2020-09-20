@@ -1,9 +1,10 @@
-package commsImpl
+package netListener
 
 import (
 	"context"
 	"fmt"
 	"github.com/bhbosman/gocommon/app"
+	"github.com/bhbosman/gocommon/comms/commsImpl"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
 	"github.com/bhbosman/gocommon/log"
 	"go.uber.org/fx"
@@ -13,10 +14,10 @@ import (
 
 type NetListenAppFuncInParams struct {
 	fx.In
-	ClientContextFactories *ConnectionReactorFactories
+	ClientContextFactories *commsImpl.ConnectionReactorFactories
 	ParentContext          context.Context `name:"Application"`
 	Lifecycle              fx.Lifecycle
-	StackFactory           *TransportFactory
+	StackFactory           *commsImpl.TransportFactory
 	Manager                *app.RunTimeManager
 	ConnectionManager      connectionManager.IConnectionManager
 	LogFactory             *log.Factory
@@ -26,12 +27,11 @@ func NewNetListenApp(
 	connectionName string,
 	url string,
 	stackName string,
-	userContextFactoryName string,
-	userContext interface{}) NewNetListenAppFunc {
+	userContextFactoryName string, settings ...ListenAppSettingsApply) NewNetListenAppFunc {
 	return func(params NetListenAppFuncInParams) (*fx.App, error) {
 		return fx.New(
-			//fx.LogName(fmt.Sprintf("%v", connectionName)),
-			CommonComponents(
+			fx.Supply(settings),
+			commsImpl.CommonComponents(
 				url,
 				stackName,
 				params.ClientContextFactories,
@@ -40,8 +40,7 @@ func NewNetListenApp(
 				params.Manager,
 				params.ConnectionManager,
 				userContextFactoryName,
-				params.LogFactory,
-				userContext),
+				params.LogFactory),
 
 			fx.Provide(fx.Annotated{Target: newNetListenManager}),
 			fx.Provide(
@@ -63,7 +62,7 @@ func NewNetListenApp(
 					fx.In
 					Factory *log.Factory
 				}) *log.SubSystemLogger {
-					return params.Factory.Create(fmt.Sprintf("Listener for %v", url))
+					return params.Factory.Create(fmt.Sprintf("Listener for %v", connectionName))
 				}),
 
 			fx.Invoke(

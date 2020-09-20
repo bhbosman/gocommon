@@ -21,21 +21,21 @@ import (
 	"time"
 )
 
-type netManager struct {
+type NetManager struct {
 	connectionReactorFactories   *ConnectionReactorFactories
-	cancelCtx                    context.Context
+	CancelCtx                    context.Context
 	cancelFunction               context.CancelFunc
-	logger                       *log.SubSystemLogger
+	Logger                       *log.SubSystemLogger
 	stackFactoryFunction         TransportFactoryFunction
 	ConnectionReactorFactoryName string
 	Manager                      *app.RunTimeManager
 	connectionManager            connectionManager.IConnectionManager
-	url                          *url.URL
+	Url                          *url.URL
 	UserContext                  interface{}
 	logFactory                   *log.Factory
 }
 
-func (self *netManager) newConnectionInstance(connectionType common.ConnectionType, conn net.Conn) (*fx.App, context.Context) {
+func (self *NetManager) NewConnectionInstance(connectionType common.ConnectionType, conn net.Conn) (*fx.App, context.Context) {
 	connectionName := fmt.Sprintf("Client Connection(%s-%s)", conn.RemoteAddr(), conn.LocalAddr())
 	l := self.logFactory.Create(connectionName)
 	var ctx context.Context
@@ -44,7 +44,7 @@ func (self *netManager) newConnectionInstance(connectionType common.ConnectionTy
 		fx.Logger(l),
 		fx.StopTimeout(time.Hour),
 		//fx.LogName(connectionName),
-		fx.Supply(l, self, self.connectionReactorFactories, self.stackFactoryFunction, self.Manager, self.url, connectionType, self.logFactory),
+		fx.Supply(l, self, self.connectionReactorFactories, self.stackFactoryFunction, self.Manager, self.Url, connectionType, self.logFactory),
 		fx.Provide(fx.Annotated{Target: func() connectionManager.IConnectionManager { return self.connectionManager }}),
 		fx.Provide(fx.Annotated{Target: func() connectionManager.IRegisterToConnectionManager { return self.connectionManager }}),
 		fx.Provide(fx.Annotated{Target: func() connectionManager.IObtainConnectionManagerInformation { return self.connectionManager }}),
@@ -55,8 +55,8 @@ func (self *netManager) newConnectionInstance(connectionType common.ConnectionTy
 		fx.Provide(fx.Annotated{Name: UserContext, Target: func() interface{} { return self.UserContext }}),
 		fx.Provide(fx.Annotated{Name: ConnectionReactorFactoryName, Target: CreateStringContext(self.ConnectionReactorFactoryName)}),
 		fx.Provide(fx.Annotated{Name: ConnectionId, Target: CreateConnectionId()}),
-		fx.Provide(func(netConnectionManager *netManager) (context.Context, context.CancelFunc) {
-			return context.WithCancel(netConnectionManager.cancelCtx)
+		fx.Provide(func(netConnectionManager *NetManager) (context.Context, context.CancelFunc) {
+			return context.WithCancel(netConnectionManager.CancelCtx)
 		}),
 
 		fx.Provide(fx.Annotated{Target: createClientContext}),
@@ -82,7 +82,7 @@ func (self *netManager) newConnectionInstance(connectionType common.ConnectionTy
 	return fxApp, ctx
 }
 
-func newNetManager(
+func NewNetManager(
 	url *url.URL,
 	connectionReactorFactories *ConnectionReactorFactories,
 	cancelCtx context.Context,
@@ -93,17 +93,17 @@ func newNetManager(
 	manager *app.RunTimeManager,
 	connectionManager connectionManager.IConnectionManager,
 	logFactory *log.Factory,
-	userContext interface{}) netManager {
-	return netManager{
+	userContext interface{}) NetManager {
+	return NetManager{
 		connectionReactorFactories:   connectionReactorFactories,
-		cancelCtx:                    cancelCtx,
+		CancelCtx:                    cancelCtx,
 		cancelFunction:               cancelFunction,
-		logger:                       logger,
+		Logger:                       logger,
 		stackFactoryFunction:         stackFactoryFunction,
 		ConnectionReactorFactoryName: ConnectionReactorFactoryName,
 		Manager:                      manager,
 		connectionManager:            connectionManager,
-		url:                          url,
+		Url:                          url,
 		UserContext:                  userContext,
 		logFactory:                   logFactory,
 	}
