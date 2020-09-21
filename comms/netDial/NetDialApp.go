@@ -6,7 +6,7 @@ import (
 	"github.com/bhbosman/gocommon/app"
 	"github.com/bhbosman/gocommon/comms/commsImpl"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
-	"github.com/bhbosman/gocommon/log"
+	"github.com/bhbosman/gologging"
 	"go.uber.org/fx"
 )
 
@@ -18,7 +18,7 @@ type AppFuncInParams struct {
 	StackFactory           *commsImpl.TransportFactory
 	Manager                *app.RunTimeManager
 	ConnectionManager      connectionManager.IConnectionManager
-	LogFactory             *log.Factory
+	LogFactory             *gologging.Factory
 }
 type AppFunc func(params AppFuncInParams) (*fx.App, error)
 
@@ -44,13 +44,13 @@ func NewNetDialApp(
 			fx.Provide(
 				func(params struct {
 					fx.In
-					Factory *log.Factory
-				}) *log.SubSystemLogger {
+					Factory *gologging.Factory
+				}) *gologging.SubSystemLogger {
 					return params.Factory.Create(fmt.Sprintf("Dialer for %v", connectionName))
 				}),
 			fx.Provide(fx.Annotated{Target: newNetDialManager}),
 			fx.Invoke(
-				func(netManager *netDialManager, logger *log.SubSystemLogger, cancelFunction context.CancelFunc) {
+				func(netManager *netDialManager, logger *gologging.SubSystemLogger, cancelFunction context.CancelFunc) {
 					params.Lifecycle.Append(fx.Hook{
 						OnStart: func(ctx context.Context) error {
 							return netManager.Start(ctx)

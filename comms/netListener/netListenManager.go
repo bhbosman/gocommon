@@ -6,7 +6,7 @@ import (
 	"github.com/bhbosman/gocommon/comms/common"
 	"github.com/bhbosman/gocommon/comms/commsImpl"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
-	"github.com/bhbosman/gocommon/log"
+	"github.com/bhbosman/gologging"
 	"go.uber.org/fx"
 	"golang.org/x/sync/semaphore"
 	log2 "log"
@@ -88,11 +88,11 @@ func newNetListenManager(
 		CancelCtx                  context.Context
 		CancelFunction             context.CancelFunc
 		StackFactoryFunction       commsImpl.TransportFactoryFunction
-		Logger                     *log.SubSystemLogger
+		Logger                     *gologging.SubSystemLogger
 		ClientContextFactoryName   string      `name:"ConnectionReactorFactoryName"`
 		//ClientContext              interface{} `name:"UserContext"`
 		Manager                    *app.RunTimeManager
-		LogFactory                 *log.Factory
+		LogFactory                 *gologging.Factory
 		Settings                   []ListenAppSettingsApply
 	}) *netListenManager {
 	netListenSettings := &netListenManagerSettings{}

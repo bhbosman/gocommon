@@ -3,7 +3,7 @@ package app
 import (
 	"context"
 	"fmt"
-	"github.com/bhbosman/gocommon/log"
+	"github.com/bhbosman/gologging"
 	"go.uber.org/fx"
 	log2 "log"
 	"runtime"
@@ -11,12 +11,12 @@ import (
 )
 
 type RunTimeManager struct {
-	logger        *log.SubSystemLogger
+	logger        *gologging.SubSystemLogger
 	ticker        *time.Ticker
 	CancelContext context.Context
 }
 
-func NewRunTimeManager(logger *log.Factory, cancelContext context.Context) *RunTimeManager {
+func NewRunTimeManager(logger *gologging.Factory, cancelContext context.Context) *RunTimeManager {
 	return &RunTimeManager{
 		logger:        logger.Create("RunTimeManager"),
 		CancelContext: cancelContext,
@@ -52,7 +52,7 @@ func RegisterRootContext() fx.Option {
 			fx.Annotated{
 				Target: func(params struct {
 					fx.In
-					Logger        *log.Factory
+					Logger        *gologging.Factory
 					Lifecycle     fx.Lifecycle
 					CancelContext context.Context `name:"Application"`
 				}) (*RunTimeManager, error) {

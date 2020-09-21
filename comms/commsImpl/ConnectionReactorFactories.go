@@ -2,8 +2,8 @@ package commsImpl
 
 import (
 	"context"
-	"github.com/bhbosman/gocommon/log"
 	"github.com/bhbosman/goerrors"
+	"github.com/bhbosman/gologging"
 	"go.uber.org/fx"
 )
 
@@ -12,7 +12,7 @@ type ConnectionReactorFactories struct {
 }
 
 func (self *ConnectionReactorFactories) CreateClientContext(
-	logger *log.SubSystemLogger,
+	logger *gologging.SubSystemLogger,
 	ConnectionName string,
 	cancelCtx context.Context,
 	cancelFunc context.CancelFunc,

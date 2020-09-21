@@ -2,14 +2,14 @@ package defs
 
 import (
 	"context"
-	"github.com/bhbosman/gocommon/log"
+	"github.com/bhbosman/gologging"
 	"github.com/bhbosman/goprotoextra"
 	"github.com/reactivex/rxgo/v2"
 	"io"
 )
 
 type TwoWayPipe struct {
-	logger             *log.SubSystemLogger
+	logger             *gologging.SubSystemLogger
 	InBound            chan rxgo.Item
 	OutBound           chan rxgo.Item
 	InboundObservable  rxgo.Observable
@@ -66,7 +66,7 @@ func (self *TwoWayPipe) Close() error {
 }
 
 func NewTwoWayPipe(
-	logger *log.SubSystemLogger,
+	logger *gologging.SubSystemLogger,
 	InBound chan rxgo.Item,
 	OutBound chan rxgo.Item,
 	InboundObservable rxgo.Observable,

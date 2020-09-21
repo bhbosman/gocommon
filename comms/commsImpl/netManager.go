@@ -7,8 +7,8 @@ import (
 	"github.com/bhbosman/gocommon/comms/common"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
 	"github.com/bhbosman/gocommon/internal"
-	"github.com/bhbosman/gocommon/log"
 	"github.com/bhbosman/gocommon/stacks/defs"
+	"github.com/bhbosman/gologging"
 	"github.com/bhbosman/goprotoextra"
 	"github.com/bhbosman/gorxextra"
 	"github.com/reactivex/rxgo/v2"
@@ -25,14 +25,14 @@ type NetManager struct {
 	connectionReactorFactories   *ConnectionReactorFactories
 	CancelCtx                    context.Context
 	cancelFunction               context.CancelFunc
-	Logger                       *log.SubSystemLogger
+	Logger                       *gologging.SubSystemLogger
 	stackFactoryFunction         TransportFactoryFunction
 	ConnectionReactorFactoryName string
 	Manager                      *app.RunTimeManager
 	connectionManager            connectionManager.IConnectionManager
 	Url                          *url.URL
 	UserContext                  interface{}
-	logFactory                   *log.Factory
+	logFactory                   *gologging.Factory
 }
 
 func (self *NetManager) NewConnectionInstance(connectionType common.ConnectionType, conn net.Conn) (*fx.App, context.Context) {
@@ -87,12 +87,12 @@ func NewNetManager(
 	connectionReactorFactories *ConnectionReactorFactories,
 	cancelCtx context.Context,
 	cancelFunction context.CancelFunc,
-	logger *log.SubSystemLogger,
+	logger *gologging.SubSystemLogger,
 	stackFactoryFunction TransportFactoryFunction,
 	ConnectionReactorFactoryName string,
 	manager *app.RunTimeManager,
 	connectionManager connectionManager.IConnectionManager,
-	logFactory *log.Factory,
+	logFactory *gologging.Factory,
 	userContext interface{}) NetManager {
 	return NetManager{
 		connectionReactorFactories:   connectionReactorFactories,
@@ -118,7 +118,7 @@ func createClientContext(
 		ConnectionManager            *ConnectionReactorFactories
 		ConnectionName               string `name:"ConnectionName"`
 		ConnectionReactorFactoryName string `name:"ConnectionReactorFactoryName"`
-		Logger                       *log.SubSystemLogger
+		Logger                       *gologging.SubSystemLogger
 		ClientContext                interface{} `name:"UserContext"`
 	}) (IConnectionReactor, error) {
 	params.Logger.LogWithLevel(0, func(logger *log2.Logger) {
@@ -140,7 +140,7 @@ func createClientContext(
 	return clientContext, nil
 }
 
-func createStackCancelFunc(cancelFunc context.CancelFunc, logger *log.SubSystemLogger) defs.CancelFunc {
+func createStackCancelFunc(cancelFunc context.CancelFunc, logger *gologging.SubSystemLogger) defs.CancelFunc {
 	return func(context string, inbound bool, err error) {
 		_ = logger.ErrorWithDescription(context, err)
 		cancelFunc()
@@ -151,7 +151,7 @@ func createStackDefinition(
 	params struct {
 		fx.In
 		ConnectionId         string `name:"ConnectionId"`
-		Logger               *log.SubSystemLogger
+		Logger               *gologging.SubSystemLogger
 		StackFactoryFunction TransportFactoryFunction
 		CancelCtx            context.Context
 		StackCancelFunc      defs.CancelFunc
@@ -211,7 +211,7 @@ func invokeLogger(
 	params struct {
 		fx.In
 		LifeCycle  fx.Lifecycle
-		Logger     *log.SubSystemLogger
+		Logger     *gologging.SubSystemLogger
 		CancelFunc context.CancelFunc
 		CancelCtx  context.Context
 	}) {
@@ -304,7 +304,7 @@ func createTransportLayer(
 		ConnectionId      string `name:"ConnectionId"`
 		ConnectionManager connectionManager.IConnectionManager
 		Lifecycle         fx.Lifecycle
-		Logger            *log.SubSystemLogger
+		Logger            *gologging.SubSystemLogger
 		CancelCtx         context.Context
 		StackCancelFunc   defs.CancelFunc
 		Def               *defs.TwoWayPipeDefinition

@@ -3,8 +3,8 @@ package commsImpl
 import (
 	"context"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
-	"github.com/bhbosman/gocommon/log"
 	"github.com/bhbosman/gocommon/multiBlock"
+	"github.com/bhbosman/gologging"
 	"github.com/bhbosman/goprotoextra"
 	"github.com/reactivex/rxgo/v2"
 	"net"
@@ -18,7 +18,7 @@ type BaseConnectionReactor struct {
 	// have not been closed
 	CancelCtx         context.Context
 	CancelFunc        context.CancelFunc
-	Logger            *log.SubSystemLogger
+	Logger            *gologging.SubSystemLogger
 	ToConnection      goprotoextra.ToConnectionFunc
 	ToReactor         goprotoextra.ToReactorFunc
 	Conn              net.Conn
@@ -30,7 +30,7 @@ type BaseConnectionReactor struct {
 }
 
 func NewBaseConnectionReactor(
-	logger *log.SubSystemLogger,
+	logger *gologging.SubSystemLogger,
 	name string,
 	cancelCtx context.Context,
 	cancelFunc context.CancelFunc,

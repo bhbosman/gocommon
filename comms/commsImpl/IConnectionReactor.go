@@ -3,7 +3,7 @@ package commsImpl
 import (
 	"context"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
-	"github.com/bhbosman/gocommon/log"
+	"github.com/bhbosman/gologging"
 	"github.com/bhbosman/goprotoextra"
 	"github.com/reactivex/rxgo/v2"
 	"net"
@@ -29,5 +29,5 @@ const ConnectionReactorFactoryName = "ConnectionReactorFactoryName"
 
 type IConnectionReactorFactory interface {
 	Name() string
-	Create(name string, cancelCtx context.Context, cancelFunc context.CancelFunc, logger *log.SubSystemLogger, userContext interface{}) IConnectionReactor
+	Create(name string, cancelCtx context.Context, cancelFunc context.CancelFunc, logger *gologging.SubSystemLogger, userContext interface{}) IConnectionReactor
 }

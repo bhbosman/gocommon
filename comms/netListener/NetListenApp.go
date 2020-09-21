@@ -6,7 +6,7 @@ import (
 	"github.com/bhbosman/gocommon/app"
 	"github.com/bhbosman/gocommon/comms/commsImpl"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
-	"github.com/bhbosman/gocommon/log"
+	"github.com/bhbosman/gologging"
 	"go.uber.org/fx"
 	"net"
 	url2 "net/url"
@@ -20,7 +20,7 @@ type NetListenAppFuncInParams struct {
 	StackFactory           *commsImpl.TransportFactory
 	Manager                *app.RunTimeManager
 	ConnectionManager      connectionManager.IConnectionManager
-	LogFactory             *log.Factory
+	LogFactory             *gologging.Factory
 }
 
 func NewNetListenApp(
@@ -60,13 +60,13 @@ func NewNetListenApp(
 			fx.Provide(
 				func(params struct {
 					fx.In
-					Factory *log.Factory
-				}) *log.SubSystemLogger {
+					Factory *gologging.Factory
+				}) *gologging.SubSystemLogger {
 					return params.Factory.Create(fmt.Sprintf("Listener for %v", connectionName))
 				}),
 
 			fx.Invoke(
-				func(netManager *netListenManager, logger *log.SubSystemLogger, cancelFunc context.CancelFunc) {
+				func(netManager *netListenManager, logger *gologging.SubSystemLogger, cancelFunc context.CancelFunc) {
 					params.Lifecycle.Append(fx.Hook{
 						OnStart: func(ctx context.Context) error {
 							netManager.listenForNewConnections()

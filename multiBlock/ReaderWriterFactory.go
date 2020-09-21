@@ -1,7 +1,7 @@
 package multiBlock
 
 import (
-	log2 "github.com/bhbosman/gocommon/log"
+	"github.com/bhbosman/gologging"
 	"go.uber.org/fx"
 )
 
@@ -32,7 +32,7 @@ func NewReaderWriterFactoryService() *ReaderWriterFactoryService {
 
 type ReaderWriterFactoryInParams struct {
 	fx.In
-	LogFactory *log2.Factory
+	LogFactory *gologging.Factory
 }
 type ReaderWriterFactoryOutParams struct {
 	fx.Out

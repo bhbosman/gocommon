@@ -3,7 +3,7 @@ package defs
 import (
 	"context"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
-	"github.com/bhbosman/gocommon/log"
+	"github.com/bhbosman/gologging"
 	"github.com/reactivex/rxgo/v2"
 )
 
@@ -56,7 +56,7 @@ func (self *TwoWayPipeDefinition) AddStackDefinitionFunc(fn func() (*StackDefini
 func (self TwoWayPipeDefinition) Build(
 	connectionId string,
 	connectionManager connectionManager.IConnectionManager,
-	logger *log.SubSystemLogger,
+	logger *gologging.SubSystemLogger,
 	cancelCtx context.Context,
 	stackCancelFunc CancelFunc) (*TwoWayPipe, error) {
 	createChannel := func() chan rxgo.Item {
