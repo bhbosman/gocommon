@@ -3,7 +3,7 @@ module github.com/bhbosman/gocommon
 go 1.15
 
 require (
-	github.com/ReactiveX/RxGo v1.0.0
+	github.com/ReactiveX/RxGo v1.0.0 // indirect
 	github.com/bhbosman/goerrors v0.0.0-20200918064252-e47717b09c4f
 	github.com/bhbosman/goprotoextra v0.0.1
 	github.com/bhbosman/gorxextra v0.0.0-20200918070301-48dbd8b934dc
@@ -22,6 +22,8 @@ require (
 	go.uber.org/multierr v1.6.0
 	golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208
 	google.golang.org/protobuf v1.25.0
+	github.com/bhbosman/gologging v0.0.0-20200921180328-d29fc55c00bc
 )
 
 replace github.com/reactivex/rxgo/v2 v2.1.0 => github.com/bhbosman/rxgo/v2 v2.1.1-0.20200918073619-601ce01f6d06
+replace github.com/bhbosman/gologging => /Users/brendanbosman/src/github.com/bhbosman/gologging
