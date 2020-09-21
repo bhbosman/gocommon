@@ -5,11 +5,11 @@ import (
 	"context"
 	"encoding/binary"
 	"github.com/bhbosman/goerrors"
+	"github.com/bhbosman/gomessageblock"
 	"github.com/bhbosman/goprotoextra"
 	"github.com/reactivex/rxgo/v2"
 	"sync"
 
-	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"io"
 	"net"
@@ -26,7 +26,7 @@ func StackDefinition(
 	return &defs.StackDefinition{
 		Name: stackName,
 		Inbound: func(index int, ctx context.Context) defs.BoundDefinition {
-			decompressorStream := multiBlock.NewReaderWriter()
+			decompressorStream := gomessageblock.NewReaderWriter()
 			decompressor := flate.NewReader(decompressorStream)
 			// decompressorMutex is here to safe guard panics when trying to destroy,
 			//and while still busy processing data
@@ -82,7 +82,7 @@ func StackDefinition(
 			}
 		},
 		Outbound: func(index int, ctx context.Context) defs.BoundDefinition {
-			compressionStream := multiBlock.NewReaderWriter()
+			compressionStream := gomessageblock.NewReaderWriter()
 			compression, err := flate.NewWriter(compressionStream, flate.DefaultCompression)
 			// compressorMutex is here to safe guard panics when trying to destroy,
 			//and while still busy processing data

@@ -2,8 +2,8 @@ package internal
 
 import (
 	"context"
-	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
+	"github.com/bhbosman/gomessageblock"
 	"github.com/bhbosman/goprotoextra"
 	"github.com/reactivex/rxgo/v2"
 	"net"
@@ -60,7 +60,7 @@ func ReadDataFromConnection(
 		}
 		messageCount++
 		byteCount += n
-		next(multiBlock.NewReaderWriterBlock(buffer[bufferStart:bufferStart+n]), CancelCtx, CancelFunc)
+		next(gomessageblock.NewReaderWriterBlock(buffer[bufferStart:bufferStart+n]), CancelCtx, CancelFunc)
 		if CancelCtx.Err() != nil {
 			return
 		}

@@ -3,8 +3,8 @@ package stream
 import (
 	"context"
 	"encoding/binary"
-	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/goerrors"
+	"github.com/bhbosman/gomessageblock"
 	"github.com/bhbosman/goprotoextra"
 	"google.golang.org/protobuf/proto"
 )
@@ -21,14 +21,14 @@ func Marshall(m proto.Message) (stm goprotoextra.ReadWriterSize, err error) {
 		if err != nil {
 			return nil, err
 		}
-		stm = multiBlock.NewReaderWriterWithBlocks(tcBytes[:], marshallBytes)
+		stm = gomessageblock.NewReaderWriterWithBlocks(tcBytes[:], marshallBytes)
 		return stm, err
 	}
 	return nil, goerrors.InvalidParam
 }
 
 func UnMarshal(
-	rws *multiBlock.ReaderWriter,
+	rws *gomessageblock.ReaderWriter,
 	cancelCtx context.Context,
 	cancelFunc context.CancelFunc,
 	toReactor goprotoextra.ToReactorFunc,

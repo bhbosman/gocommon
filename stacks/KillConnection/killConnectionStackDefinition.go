@@ -2,9 +2,9 @@ package KillConnection
 
 import (
 	"context"
-	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/goerrors"
+	"github.com/bhbosman/gomessageblock"
 	"github.com/bhbosman/goprotoextra"
 	"github.com/reactivex/rxgo/v2"
 	"time"
@@ -65,7 +65,7 @@ func StackDefinition(
 					Start: func(ctx context.Context) error {
 						if cancelContext.Err() == nil {
 							go func() {
-								outBoundChannel <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte("ERR:No Transport layer selected. Closing down connection\n")))
+								outBoundChannel <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte("ERR:No Transport layer selected. Closing down connection\n")))
 								time.Sleep(time.Millisecond * 10)
 								stackCancelFunc("Kill Connection", false, goerrors.InvalidParam)
 								return

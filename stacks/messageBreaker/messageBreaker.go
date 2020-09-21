@@ -5,10 +5,10 @@ import (
 	"context"
 	"encoding/binary"
 	"fmt"
-	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/gocommon/stacks/messageBreaker/internal"
 	"github.com/bhbosman/goerrors"
+	"github.com/bhbosman/gomessageblock"
 	"github.com/bhbosman/goprotoextra"
 	"github.com/reactivex/rxgo/v2"
 	"reflect"
@@ -35,7 +35,7 @@ func StackDefinition(
 					if stackCancelFunc == nil {
 						return nil, goerrors.InvalidParam
 					}
-					rw := multiBlock.NewReaderWriter()
+					rw := gomessageblock.NewReaderWriter()
 					state := internal.BuildMessageStateReadMessageSignature
 					var length uint32 = 0
 
@@ -123,14 +123,14 @@ func StackDefinition(
 								return
 							}
 							switch v := i.(type) {
-							case *multiBlock.ReaderWriter:
+							case *gomessageblock.ReaderWriter:
 								err := rw.SetNext(v)
 								if err != nil {
 									params.StackCancelFunc("rw.SetNext()", true, err)
 									return
 								}
 								inboundState(func(dataBlock []byte) {
-									item := rxgo.Of(multiBlock.NewReaderWriterBlock(dataBlock))
+									item := rxgo.Of(gomessageblock.NewReaderWriterBlock(dataBlock))
 									item.SendContext(ctx, nextChannel)
 								})
 							default:
@@ -177,7 +177,7 @@ func StackDefinition(
 							block := make([]byte, 8)
 							binary.LittleEndian.PutUint32(block[0:4], markerAsUInt32)
 							binary.LittleEndian.PutUint32(block[4:8], uint32(i.Size()))
-							result := multiBlock.NewReaderWriterBlock(block)
+							result := gomessageblock.NewReaderWriterBlock(block)
 							err := result.SetNext(i)
 							if err != nil {
 								params.StackCancelFunc("rw.SetNext()", false, err)

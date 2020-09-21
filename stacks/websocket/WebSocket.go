@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"github.com/bhbosman/gocommon/comms/common"
 	io2 "github.com/bhbosman/gocommon/comms/io"
-	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/gocommon/stacks/internal/connectionWrapper"
 	"github.com/bhbosman/gocommon/stacks/websocket/wsmsg"
 	"github.com/bhbosman/gocommon/stream"
 	"github.com/bhbosman/goerrors"
+	"github.com/bhbosman/gomessageblock"
 	"github.com/bhbosman/goprotoextra"
 	"github.com/gobwas/ws"
 	"github.com/gobwas/ws/wsutil"
@@ -36,7 +36,7 @@ func StackDefinition(
 			if ctx.Err() != nil {
 				return 0, ctx.Err()
 			}
-			dataToConnection := multiBlock.NewReaderWriterSize(len(b))
+			dataToConnection := gomessageblock.NewReaderWriterSize(len(b))
 			if ctx.Err() != nil {
 				return 0, ctx.Err()
 			}
@@ -224,7 +224,7 @@ func StackDefinition(
 						connectionManager,
 						func(ctx context.Context, size goprotoextra.ReadWriterSize) {
 							switch v := size.(type) {
-							case *multiBlock.ReaderWriter:
+							case *gomessageblock.ReaderWriter:
 								messageWrapper, err := stream.UnMarshal(v, nil, nil, nil, nil)
 								if err != nil {
 									return

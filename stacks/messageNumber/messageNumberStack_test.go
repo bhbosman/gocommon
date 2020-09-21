@@ -3,8 +3,8 @@ package messageNumber
 import (
 	"context"
 	"encoding/binary"
-	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
+	"github.com/bhbosman/gomessageblock"
 	"github.com/reactivex/rxgo/v2"
 	"github.com/stretchr/testify/assert"
 	"sync"
@@ -39,7 +39,7 @@ func TestMessageNumberStackDefinition(t *testing.T) {
 		doOnNext := obs2.DoOnNext(
 			func(i interface{}) {
 				switch v := i.(type) {
-				case *multiBlock.ReaderWriter:
+				case *gomessageblock.ReaderWriter:
 					p := make([]byte, v.Size())
 					_, _ = v.Read(p)
 					assert.Equal(t, p, []byte{1, 2, 3, 4, 5, 6, 7, 8})
@@ -52,7 +52,7 @@ func TestMessageNumberStackDefinition(t *testing.T) {
 			return
 		}()
 		wg.Add(1)
-		item := rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8}))
+		item := rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8}))
 		item.SendContext(context.Background(), ch)
 		wg.Wait()
 	})
@@ -80,7 +80,7 @@ func TestMessageNumberStackDefinition(t *testing.T) {
 		_ = obs2.DoOnNext(
 			func(i interface{}) {
 				switch v := i.(type) {
-				case *multiBlock.ReaderWriter:
+				case *gomessageblock.ReaderWriter:
 					p := make([]byte, v.Size())
 					_, _ = v.Read(p)
 					assert.Equal(t, p, []byte{1, 2, 3, 4, 5, 6, 7, 8})
@@ -98,7 +98,7 @@ func TestMessageNumberStackDefinition(t *testing.T) {
 
 			binary.LittleEndian.PutUint64(data[0:8], i)
 
-			item := rxgo.Of(multiBlock.NewReaderWriterBlock(data))
+			item := rxgo.Of(gomessageblock.NewReaderWriterBlock(data))
 			item.SendContext(context.Background(), ch)
 		}
 		wg.Wait()
@@ -131,7 +131,7 @@ func TestMessageNumberStackDefinition(t *testing.T) {
 			return
 		}()
 		wg.Add(1)
-		ch <- rxgo.Of(multiBlock.NewReaderWriterBlock(dataIn[:]))
+		ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock(dataIn[:]))
 		wg.Wait()
 	})
 

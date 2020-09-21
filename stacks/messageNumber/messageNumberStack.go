@@ -4,9 +4,9 @@ import (
 	"context"
 	"encoding/binary"
 	"fmt"
-	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/goerrors"
+	"github.com/bhbosman/gomessageblock"
 	"github.com/bhbosman/goprotoextra"
 	"github.com/reactivex/rxgo/v2"
 )
@@ -86,7 +86,7 @@ func StackDefinition(
 							number++
 							buffer := [8]byte{}
 							binary.LittleEndian.PutUint64(buffer[:], number)
-							rw := multiBlock.NewReaderWriterBlock(buffer[:])
+							rw := gomessageblock.NewReaderWriterBlock(buffer[:])
 							_ = rw.SetNext(i)
 							return rw, nil
 						},

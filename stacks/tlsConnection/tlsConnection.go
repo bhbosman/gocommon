@@ -6,12 +6,12 @@ import (
 	"crypto/x509"
 	"github.com/bhbosman/gocommon/internal"
 	"github.com/bhbosman/goerrors"
+	"github.com/bhbosman/gomessageblock"
 	"github.com/bhbosman/goprotoextra"
 	"sync"
 
 	"github.com/bhbosman/gocommon/comms/common"
 	io2 "github.com/bhbosman/gocommon/comms/io"
-	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/gocommon/stacks/internal/connectionWrapper"
 	"github.com/reactivex/rxgo/v2"
@@ -37,7 +37,7 @@ func StackDefinition(
 			if ctx.Err() != nil {
 				return 0, ctx.Err()
 			}
-			dataToConnection := multiBlock.NewReaderWriterSize(len(b))
+			dataToConnection := gomessageblock.NewReaderWriterSize(len(b))
 			if ctx.Err() != nil {
 				return 0, ctx.Err()
 			}

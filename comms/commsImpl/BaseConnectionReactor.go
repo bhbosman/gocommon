@@ -3,8 +3,8 @@ package commsImpl
 import (
 	"context"
 	"github.com/bhbosman/gocommon/comms/connectionManager"
-	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gologging"
+	"github.com/bhbosman/gomessageblock"
 	"github.com/bhbosman/goprotoextra"
 	"github.com/reactivex/rxgo/v2"
 	"net"
@@ -74,7 +74,7 @@ func (self *BaseConnectionReactor) Open() error {
 }
 
 func (self *BaseConnectionReactor) SendStringToConnection(s string) error {
-	rws, err := multiBlock.NewReaderWriterString(s)
+	rws, err := gomessageblock.NewReaderWriterString(s)
 	if err != nil {
 		return err
 	}

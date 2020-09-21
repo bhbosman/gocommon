@@ -4,10 +4,10 @@ import (
 	"context"
 	"crypto/sha1"
 	"encoding/binary"
-	"github.com/bhbosman/gocommon/multiBlock"
 	"github.com/bhbosman/gocommon/stacks/defs"
 	"github.com/bhbosman/gocommon/stacks/messageBreaker/internal"
 	"github.com/bhbosman/goerrors"
+	"github.com/bhbosman/gomessageblock"
 	"github.com/reactivex/rxgo/v2"
 	"github.com/stretchr/testify/assert"
 	"io"
@@ -61,7 +61,7 @@ func TestBuildBlocksInbound(t *testing.T) {
 			inbound.DoOnNext(func(i interface{}) {
 			})
 			wg.Add(1)
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}))
 			wg.Wait()
 			assert.Error(t, blockError)
 			assert.Equal(t, goerrors.InvalidSignature, blockError)
@@ -97,10 +97,10 @@ func TestBuildBlocksInbound(t *testing.T) {
 			})
 			assert.Equal(t, internal.BuildMessageStateReadMessageSignature, buildState)
 			wg.Add(1)
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{'B'}))
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{'V'}))
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{'I'}))
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{'S'}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{'B'}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{'V'}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{'I'}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{'S'}))
 			wg.Wait()
 			assert.NoError(t, blockError)
 			assert.Equal(t, internal.BuildMessageStateReadMessageLength, buildState)
@@ -138,19 +138,19 @@ func TestBuildBlocksInbound(t *testing.T) {
 			})
 			assert.Equal(t, internal.BuildMessageStateReadMessageSignature, buildState)
 			wg.Add(1)
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{'B'}))
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{'V'}))
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{'I'}))
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{'S'}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{'B'}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{'V'}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{'I'}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{'S'}))
 			wg.Wait()
 			assert.NoError(t, blockError)
 			assert.Equal(t, internal.BuildMessageStateReadMessageLength, buildState)
 
 			wg.Add(1)
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{4}))
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{0}))
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{0}))
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{0}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{4}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{0}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{0}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{0}))
 			wg.Wait()
 			assert.NoError(t, blockError)
 			assert.Equal(t, internal.BuildMessageStateReadMessageData, buildState)
@@ -186,9 +186,9 @@ func TestBuildBlocksInbound(t *testing.T) {
 			})
 			assert.Equal(t, internal.BuildMessageStateReadMessageSignature, buildState)
 			wg.Add(4)
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{'B', 'V', 'I', 'S'}))
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{4, 0, 0, 0}))
-			ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{4, 3, 2, 1}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{'B', 'V', 'I', 'S'}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{4, 0, 0, 0}))
+			ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{4, 3, 2, 1}))
 			wg.Wait()
 			assert.NoError(t, blockError)
 			assert.Equal(t, internal.BuildMessageStateReadMessageSignature, buildState)
@@ -217,7 +217,7 @@ func TestBuildBlocksInbound(t *testing.T) {
 			inbound.DoOnNext(
 				func(i interface{}) {
 					switch v := i.(type) {
-					case *multiBlock.ReaderWriter:
+					case *gomessageblock.ReaderWriter:
 						_, _ = io.Copy(receivedHash, v)
 						wg.Done()
 					default:
@@ -230,7 +230,7 @@ func TestBuildBlocksInbound(t *testing.T) {
 				mutex.Lock()
 				defer mutex.Unlock()
 				wg.Add(1)
-				ch <- rxgo.Of(multiBlock.NewReaderWriterBlock(buildMessage("Hello world", nil)))
+				ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock(buildMessage("Hello world", nil)))
 				wg.Wait()
 			})
 			t.Run("two message as one block", func(t *testing.T) {
@@ -240,15 +240,15 @@ func TestBuildBlocksInbound(t *testing.T) {
 				data01 := buildMessage("Hello world0001", nil)
 				data02 := buildMessage("Hello world0001", nil)
 
-				block01 := multiBlock.NewReaderWriterBlock(data01)
-				block02 := multiBlock.NewReaderWriterBlock(data02)
+				block01 := gomessageblock.NewReaderWriterBlock(data01)
+				block02 := gomessageblock.NewReaderWriterBlock(data02)
 				block01.SetNext(block02)
 				wg.Add(2)
 
 				ch <- rxgo.Of(block01)
 				wg.Wait()
 				wg.Add(1)
-				ch <- rxgo.Of(multiBlock.NewReaderWriterBlock(buildMessage("Hello world", nil)))
+				ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock(buildMessage("Hello world", nil)))
 				wg.Wait()
 
 			})
@@ -261,7 +261,7 @@ func TestBuildBlocksInbound(t *testing.T) {
 				n := 500
 				wg.Add(n)
 				for i := 0; i < n; i++ {
-					ch <- rxgo.Of(multiBlock.NewReaderWriterBlock(buildMessage("Hello world0001", sendHash)))
+					ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock(buildMessage("Hello world0001", sendHash)))
 				}
 				wg.Wait()
 				a := receivedHash.Sum(nil)
@@ -278,7 +278,7 @@ func TestBuildBlocksInbound(t *testing.T) {
 				for i := 0; i < n; i++ {
 					data := buildMessage("Hello world0001", sendHash)
 					for _, c := range data {
-						ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{c}))
+						ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{c}))
 					}
 				}
 				wg.Wait()
@@ -290,10 +290,10 @@ func TestBuildBlocksInbound(t *testing.T) {
 				mutex.Lock()
 				defer mutex.Unlock()
 				wg.Add(1)
-				ch <- rxgo.Of(multiBlock.NewReaderWriterBlock(buildMessage("Hello world0001", nil)))
+				ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock(buildMessage("Hello world0001", nil)))
 				wg.Wait()
 				wg.Add(1)
-				ch <- rxgo.Of(multiBlock.NewReaderWriterBlock(buildMessage("Hello world0002", nil)))
+				ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock(buildMessage("Hello world0002", nil)))
 				wg.Wait()
 			})
 
@@ -323,7 +323,7 @@ func TestBuildBlocksInbound(t *testing.T) {
 		outbound.DoOnNext(
 			func(i interface{}) {
 				switch v := i.(type) {
-				case *multiBlock.ReaderWriter:
+				case *gomessageblock.ReaderWriter:
 					p := make([]byte, v.Size())
 					_, err := v.Read(p)
 					assert.NoError(t, err)
@@ -333,7 +333,7 @@ func TestBuildBlocksInbound(t *testing.T) {
 				}
 			})
 		wg.Add(1)
-		ch <- rxgo.Of(multiBlock.NewReaderWriterBlock([]byte{0, 0, 0, 0}))
+		ch <- rxgo.Of(gomessageblock.NewReaderWriterBlock([]byte{0, 0, 0, 0}))
 		wg.Wait()
 	})
 
