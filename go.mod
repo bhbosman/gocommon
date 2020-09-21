@@ -3,6 +3,7 @@ module github.com/bhbosman/gocommon
 go 1.15
 
 require (
+	github.com/ReactiveX/RxGo v1.0.0
 	github.com/bhbosman/goerrors v0.0.0-20200918064252-e47717b09c4f
 	github.com/bhbosman/goprotoextra v0.0.1
 	github.com/bhbosman/gorxextra v0.0.0-20200918070301-48dbd8b934dc
