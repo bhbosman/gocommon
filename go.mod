@@ -3,15 +3,15 @@ module github.com/bhbosman/gocommon
 go 1.15
 
 require (
-	github.com/ReactiveX/RxGo v1.0.0 // indirect
 	github.com/bhbosman/goerrors v0.0.0-20200918064252-e47717b09c4f
+	github.com/bhbosman/gologging v0.0.0-20200921180328-d29fc55c00bc
+	github.com/bhbosman/gomessageblock v0.0.0-20200921180725-7cd29a998aa3
 	github.com/bhbosman/goprotoextra v0.0.1
 	github.com/bhbosman/gorxextra v0.0.0-20200918070301-48dbd8b934dc
 	github.com/cskr/pubsub v1.0.2
 	github.com/gobwas/httphead v0.0.0-20180130184737-2c6c146eadee // indirect
 	github.com/gobwas/pool v0.2.1 // indirect
 	github.com/gobwas/ws v1.0.4
-	github.com/golang/mock v1.4.4
 	github.com/golang/protobuf v1.4.2
 	github.com/google/uuid v1.1.2
 	github.com/gorilla/mux v1.8.0
@@ -22,8 +22,8 @@ require (
 	go.uber.org/multierr v1.6.0
 	golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208
 	google.golang.org/protobuf v1.25.0
-	github.com/bhbosman/gologging v0.0.0-20200921180328-d29fc55c00bc
 )
 
 replace github.com/reactivex/rxgo/v2 v2.1.0 => github.com/bhbosman/rxgo/v2 v2.1.1-0.20200918073619-601ce01f6d06
+
 replace github.com/bhbosman/gologging => /Users/brendanbosman/src/github.com/bhbosman/gologging
