@@ -119,6 +119,9 @@ func newNetDialManager(
 		canDial:     nil,
 	}
 	for _, option := range params.Options {
+		if option == nil {
+			continue
+		}
 		option.apply(settings)
 	}
 
