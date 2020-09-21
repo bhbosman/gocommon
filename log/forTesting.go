@@ -1,7 +1,6 @@
-package test
+package log
 
 import (
-	log2 "github.com/bhbosman/gocommon/log"
 	"go.uber.org/fx"
 	"log"
 	"testing"
@@ -9,15 +8,15 @@ import (
 
 func ProvideLogFactoryForTesting(
 	t *testing.T,
-	cb func(*log2.Factory)) fx.Option {
+	cb func(*Factory)) fx.Option {
 	return fx.Provide(
-		func() *log2.Factory {
+		func() *Factory {
 			logger := log.New(
-				log2.NewTestWriter(t),
+				NewTestWriter(t),
 				"",
 				log.LstdFlags)
 
-			logFactory := log2.NewFactory(logger)
+			logFactory := NewFactory(logger)
 			if cb != nil {
 				cb(logFactory)
 			}

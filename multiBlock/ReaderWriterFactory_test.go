@@ -2,7 +2,7 @@ package multiBlock
 
 import (
 	"context"
-	"github.com/bhbosman/gocommon/log/test"
+	"github.com/bhbosman/gocommon/log"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/fx"
@@ -14,7 +14,7 @@ func TestWriterFactoryService(t *testing.T) {
 	var sut IReaderWriterFactoryService
 	app := fxtest.New(
 		t,
-		test.ProvideLogFactoryForTesting(t, nil),
+		log.ProvideLogFactoryForTesting(t, nil),
 		ProvideReaderWriterFactoryService(),
 		fx.Populate(&sut),
 	)
