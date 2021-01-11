@@ -7,7 +7,6 @@ import (
 	"go.uber.org/fx"
 )
 
-
 func RegisterRootContext() fx.Option {
 	return fx.Options(
 		fx.Provide(
