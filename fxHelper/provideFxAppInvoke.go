@@ -14,7 +14,6 @@ func InvokeApps() fx.Option {
 			Apps      []*fx.App `group:"Apps"`
 			Logger    *gologging.Factory
 		}) {
-
 			for _, item := range params.Apps {
 				localApp := item
 				params.Lifecycle.Append(fx.Hook{

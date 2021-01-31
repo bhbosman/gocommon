@@ -12,6 +12,7 @@ require (
 	google.golang.org/protobuf v1.25.0
 )
 
-//replace github.com/reactivex/rxgo/v2 v2.1.0 => github.com/bhbosman/rxgo/v2 v2.1.1-0.20200922152528-6aef42e76e00
-
-//replace github.com/bhbosman/gocomms => ../gocomms
+replace github.com/bhbosman/goprotoextra => ../goprotoextra
+replace github.com/bhbosman/gologging => ../gologging
+replace github.com/bhbosman/gomessageblock => ../gomessageblock
+replace github.com/bhbosman/goerrors => ../goerrors
