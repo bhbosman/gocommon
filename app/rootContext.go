@@ -4,10 +4,11 @@ import (
 	"context"
 	"github.com/bhbosman/gocommon"
 	"github.com/bhbosman/gologging"
+	"github.com/cskr/pubsub"
 	"go.uber.org/fx"
 )
 
-func RegisterRootContext() fx.Option {
+func RegisterRootContext(pubSub *pubsub.PubSub) fx.Option {
 	return fx.Options(
 		fx.Provide(
 			fx.Annotated{
@@ -45,5 +46,5 @@ func RegisterRootContext() fx.Option {
 					})
 					return cancel, cancelFunc
 				}}),
-		ProvidePubSub("Application"))
+		ProvidePubSub("Application", pubSub))
 }
