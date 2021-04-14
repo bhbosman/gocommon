@@ -9,6 +9,8 @@ github.com/bhbosman/gomessageblock v0.0.0-20200921180725-7cd29a998aa3 h1:Rinpxxn
 github.com/bhbosman/gomessageblock v0.0.0-20200921180725-7cd29a998aa3/go.mod h1:OJ3m+l6+IE701jITF2RG97UPk/no+5U1yeh16PQooNU=
 github.com/bhbosman/goprotoextra v0.0.1 h1:CoIa6MSq9A3CMqrpStgpgh/Q731HSDyGoa0bzVFUbSQ=
 github.com/bhbosman/goprotoextra v0.0.1/go.mod h1:8KtYuUDuRrZU4VOpB9r2YKWJtuThaB2ep3OtJdsF+zU=
+github.com/bhbosman/goprotoextra v0.0.2-0.20210414124526-a342e2a9e82f h1:Qm5ax/BmMdo5eZMaRPav2H57irfT/UP61H+bFChMvO4=
+github.com/bhbosman/goprotoextra v0.0.2-0.20210414124526-a342e2a9e82f/go.mod h1:XW64igzX3ph2KXKGAzt11RK3oc6GvS7U8DoaY76jJ0Y=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/cskr/pubsub v1.0.2 h1:vlOzMhl6PFn60gRlTQQsIfVwaPB/B/8MziK8FhEPt/0=
