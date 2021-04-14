@@ -1,14 +1,10 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/bhbosman/goerrors v0.0.0-20200918064252-e47717b09c4f h1:tn+HxggOxuewICKQ+p4mLoRyfE503xgIhWDo+2Z3dWk=
-github.com/bhbosman/goerrors v0.0.0-20200918064252-e47717b09c4f/go.mod h1:Otn1qS556wnQOL+lAkheIV/UxgKITTmY3KDYAXkQbfQ=
+github.com/bhbosman/goerrors v0.0.0-20210201065523-bb3e832fa9ab h1:1qs6BwooBLOSo2uR1hZ9IKYZxovU2Igof41HBiQdQII=
+github.com/bhbosman/goerrors v0.0.0-20210201065523-bb3e832fa9ab/go.mod h1:hLIshvVUdt9e2gaKn5qqe9F77t+7L/I+NXkuM1KkJEw=
 github.com/bhbosman/gologging v0.0.0-20200921180328-d29fc55c00bc h1:W2SGlAixV5+dBq5da/dVJDYcUxEItIA5IdqdLTjnaLQ=
 github.com/bhbosman/gologging v0.0.0-20200921180328-d29fc55c00bc/go.mod h1:h6gnYEoakrykzxs2ICT07wrO6yZC5lrSOqwUR/WInc0=
-github.com/bhbosman/gomessageblock v0.0.0-20200921180725-7cd29a998aa3 h1:RinpxxnXO8u7ua2NwNxAdXZRXb9nzwFY8d9OdtNTx8g=
-github.com/bhbosman/gomessageblock v0.0.0-20200921180725-7cd29a998aa3/go.mod h1:OJ3m+l6+IE701jITF2RG97UPk/no+5U1yeh16PQooNU=
-github.com/bhbosman/goprotoextra v0.0.1 h1:CoIa6MSq9A3CMqrpStgpgh/Q731HSDyGoa0bzVFUbSQ=
-github.com/bhbosman/goprotoextra v0.0.1/go.mod h1:8KtYuUDuRrZU4VOpB9r2YKWJtuThaB2ep3OtJdsF+zU=
 github.com/bhbosman/goprotoextra v0.0.2-0.20210414124526-a342e2a9e82f h1:Qm5ax/BmMdo5eZMaRPav2H57irfT/UP61H+bFChMvO4=
 github.com/bhbosman/goprotoextra v0.0.2-0.20210414124526-a342e2a9e82f/go.mod h1:XW64igzX3ph2KXKGAzt11RK3oc6GvS7U8DoaY76jJ0Y=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
@@ -87,7 +83,6 @@ golang.org/x/sync v0.0.0-20181108010431-42b317875d0f/go.mod h1:RxMgew5VJxzue5/jJ
 golang.org/x/sync v0.0.0-20190423024810-112230192c58/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sys v0.0.0-20180830151530-49385e6e1522/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
-golang.org/x/sys v0.0.0-20190412213103-97732733099d h1:+R4KGOnez64A81RvjARKc4UT5/tI9ujCIVX+P5KiHuI=
 golang.org/x/sys v0.0.0-20190412213103-97732733099d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/tools v0.0.0-20190114222345-bf090417da8b/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
