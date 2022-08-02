@@ -13,11 +13,11 @@ func ProvidePubSub(name string) fx.Option {
 			Target: func(
 				params struct {
 					fx.In
-					lifecycle fx.Lifecycle
+					Lifecycle fx.Lifecycle
 				},
 			) *pubsub.PubSub {
 				result := pubsub.New(32)
-				params.lifecycle.Append(
+				params.Lifecycle.Append(
 					fx.Hook{
 						OnStart: nil,
 						OnStop: func(ctx context.Context) error {
