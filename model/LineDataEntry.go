@@ -12,3 +12,8 @@ type LineData struct {
 	InValue  LineDataEntry
 	OutValue LineDataEntry
 }
+
+type KeyValue struct {
+	Key   string
+	Value string
+}

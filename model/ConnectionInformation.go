@@ -26,15 +26,15 @@ func (self StackPropertyValue) ByteCount() string {
 }
 
 type ConnectionInformation struct {
-	Id            string
-	CancelContext context.Context
-	CancelFunc    context.CancelFunc
-	Name          string
-	//Status           string
+	Id               string
+	CancelContext    context.Context
+	CancelFunc       context.CancelFunc
+	Name             string
 	ConnectionTime   time.Time
 	InboundCounters  *PublishRxHandlerCounters
 	OutboundCounters *PublishRxHandlerCounters
 	Grid             []*LineData
+	KeyValuesMap     map[string]string
 }
 
 func NewConnectionInformation(id string, function context.CancelFunc, CancelContext context.Context) *ConnectionInformation {
@@ -76,11 +76,11 @@ type ConnectionClosed struct {
 }
 
 type ConnectionState struct {
-	ConnectionId  string
-	CancelContext context.Context
-	CancelFunc    context.CancelFunc
-	Name          string
-	//Status         string
+	ConnectionId   string
+	CancelContext  context.Context
+	CancelFunc     context.CancelFunc
+	Name           string
 	ConnectionTime time.Time
 	Grid           []LineData
+	KeyValue       []KeyValue
 }
