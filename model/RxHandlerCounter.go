@@ -6,18 +6,22 @@ type RxHandlerCounter struct {
 
 func NewRxHandlerCounter(
 	stackName string,
-	otherMessageCount int64,
-	rwsMessageCount int64,
+	otherMessageCountIn int64,
+	rwsMessageCountIn int64,
+	otherMessageCountOut int64,
+	rwsMessageCountOut int64,
 	rwsBytesIn int64,
 	rwsBytesOut int64,
 ) *RxHandlerCounter {
 	return &RxHandlerCounter{
 		Data: LineDataEntry{
-			Name:          stackName,
-			OtherMsgCount: otherMessageCount,
-			RwsMsgCount:   rwsMessageCount,
-			RwsBytesIn:    rwsBytesIn,
-			RwsBytesOut:   rwsBytesOut,
+			Name:             stackName,
+			OtherMsgCountIn:  otherMessageCountIn,
+			RwsMsgCountIn:    rwsMessageCountIn,
+			OtherMsgCountOut: otherMessageCountOut,
+			RwsMsgCountOut:   rwsMessageCountOut,
+			RwsBytesIn:       rwsBytesIn,
+			RwsBytesOut:      rwsBytesOut,
 		},
 	}
 }
