@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/bhbosman/goCommsDefinitions"
+	"github.com/bhbosman/gocommon"
 	"github.com/bhbosman/gocommon/GoFunctionCounter"
 	"github.com/bhbosman/gocommon/model"
 	"github.com/bhbosman/gocommon/rxHelper"
@@ -14,7 +15,7 @@ import (
 func ForEachWithTimeChannel(
 	description string,
 	direction model.StreamDirection,
-	o rxgo.Observable,
+	o gocommon.IObservable,
 	ctx context.Context,
 	goFunctionCounter GoFunctionCounter.IService,
 	handler goCommsDefinitions.IRxNextHandler,
