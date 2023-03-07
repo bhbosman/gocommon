@@ -41,3 +41,6 @@ replace github.com/bhbosman/goCommsDefinitions => ../goCommsDefinitions
 //replace github.com/bhbosman/goerrors => ../goerrors
 
 //replace github.com/bhbosman/goprotoextra => ../goprotoextra
+replace (
+	github.com/reactivex/rxgo/v2 => ../goRx
+)

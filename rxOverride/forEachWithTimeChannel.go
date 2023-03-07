@@ -24,7 +24,7 @@ func ForEachWithTimeChannel(
 	opts ...rxgo.Option,
 ) rxgo.Disposed {
 	dispose := make(chan struct{})
-	localHandler := func(ctx context.Context, src <-chan rxgo.Item) {
+	localHandler := func(ctx context.Context, src *rxgo.ItemChannel) {
 		defer close(dispose)
 
 		localNextFunc := rxHelper.HandleMessage(
@@ -32,7 +32,7 @@ func ForEachWithTimeChannel(
 			handler.OnTrySendData,
 			handler.IsActive,
 			func() int {
-				return len(src)
+				return src.Len()
 			},
 			func() int {
 				return len(channel)
@@ -54,7 +54,7 @@ func ForEachWithTimeChannel(
 				}
 				localNextFunc(unk)
 				break
-			case i, ok := <-src:
+			case i, ok := <-src.Ch:
 				if !ok {
 					handler.OnComplete()
 					return

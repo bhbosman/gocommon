@@ -45,7 +45,7 @@ func ForEach1(
 	opts ...rxgo.Option,
 ) rxgo.Disposed {
 	dispose := make(chan struct{})
-	handler := func(ctx context.Context, src <-chan rxgo.Item) {
+	handler := func(ctx context.Context, src *rxgo.ItemChannel) {
 		defer close(dispose)
 
 		localNextFunc := rxHelper.HandleMessage(
@@ -53,7 +53,7 @@ func ForEach1(
 			tryNextFunc,
 			isActive,
 			func() int {
-				return len(src)
+				return src.Len()
 			},
 		)
 		for {
@@ -61,7 +61,7 @@ func ForEach1(
 			case <-ctx.Done():
 				completedFunc()
 				return
-			case i, ok := <-src:
+			case i, ok := <-src.Ch:
 				if !ok {
 					completedFunc()
 					return
