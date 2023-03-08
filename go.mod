@@ -18,7 +18,7 @@ require (
 )
 
 require (
-	github.com/cenkalti/backoff/v4 v4.0.0 // indirect
+	github.com/cenkalti/backoff/v4 v4.1.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/emirpasic/gods v1.12.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
@@ -41,6 +41,4 @@ replace github.com/bhbosman/goCommsDefinitions => ../goCommsDefinitions
 //replace github.com/bhbosman/goerrors => ../goerrors
 
 //replace github.com/bhbosman/goprotoextra => ../goprotoextra
-replace (
-	github.com/reactivex/rxgo/v2 => ../goRx
-)
+replace github.com/reactivex/rxgo/v2 => ../goRx
