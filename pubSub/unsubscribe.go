@@ -5,6 +5,11 @@ import (
 	"github.com/cskr/pubsub"
 )
 
+type IPubSub interface {
+	Pub(msg interface{}, topics ...string)
+	PubWithContext(msg interface{}, topics ...string) bool
+}
+
 func Unsubscribe(
 	name string,
 	pubSub *pubsub.PubSub,
