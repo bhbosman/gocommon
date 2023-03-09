@@ -3,7 +3,7 @@ module github.com/bhbosman/gocommon
 go 1.18
 
 require (
-	github.com/bhbosman/goCommsDefinitions v0.0.0-20230302063431-887458f90947
+	github.com/bhbosman/goCommsDefinitions v0.0.0-20230308211643-24fe88b2378e
 	github.com/bhbosman/goerrors v0.0.0-20220623084908-4d7bbcd178cf
 	github.com/bhbosman/gomessageblock v0.0.0-20220617132215-32f430d7de62
 	github.com/bhbosman/goprotoextra v0.0.1
@@ -44,4 +44,5 @@ replace github.com/bhbosman/goCommsDefinitions => ../goCommsDefinitions
 replace github.com/reactivex/rxgo/v2 => ../goRx
 
 replace github.com/bhbosman/gomessageblock => ../gomessageblock
+
 replace github.com/bhbosman/goprotoextra => ../goprotoextra
