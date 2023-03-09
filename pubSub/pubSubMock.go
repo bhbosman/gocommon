@@ -2,7 +2,7 @@
 // Source: github.com/bhbosman/gocommon/pubSub (interfaces: IPubSub)
 
 // Package fullMarketDataManagerService is a generated GoMock package.
-package fullMarketDataManagerService
+package pubSub
 
 import (
 	reflect "reflect"
