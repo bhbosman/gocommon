@@ -7,7 +7,10 @@ type PublishRxHandlerCounters struct {
 	Data         map[string]string
 }
 
-func NewPublishRxHandlerCounters(connectionId string, direction StreamDirection) *PublishRxHandlerCounters {
+func NewPublishRxHandlerCounters(
+	connectionId string,
+	direction StreamDirection,
+) *PublishRxHandlerCounters {
 	return &PublishRxHandlerCounters{
 		ConnectionId: connectionId,
 		Direction:    direction,
