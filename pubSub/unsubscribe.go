@@ -22,8 +22,9 @@ func Unsubscribe(
 	_ = unk.GoRun(
 		name,
 		func() {
-			subscribeChannel.Flush()
-
+			if subscribeChannel != nil {
+				subscribeChannel.Flush()
+			}
 		},
 	)
 	return nil
