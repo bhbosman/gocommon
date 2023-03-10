@@ -3,6 +3,7 @@ package model
 import (
 	"context"
 	"github.com/icza/gox/fmtx"
+	"github.com/reactivex/rxgo/v2"
 	"time"
 )
 
@@ -26,33 +27,45 @@ func (self StackPropertyValue) ByteCount() string {
 }
 
 type ConnectionInformation struct {
-	Id               string
-	CancelContext    context.Context
-	CancelFunc       context.CancelFunc
-	Name             string
-	ConnectionTime   time.Time
-	InboundCounters  *PublishRxHandlerCounters
-	OutboundCounters *PublishRxHandlerCounters
-	Grid             []*LineData
-	KeyValuesMap     map[string]string
+	Id                      string
+	CancelContext           context.Context
+	CancelFunc              context.CancelFunc
+	Name                    string
+	ConnectionTime          time.Time
+	NextFuncOutBoundChannel rxgo.NextFunc
+	NextFuncInBoundChannel  rxgo.NextFunc
+	InboundCounters         *PublishRxHandlerCounters
+	OutboundCounters        *PublishRxHandlerCounters
+	Grid                    []*LineData
+	KeyValuesMap            map[string]string
 }
 
-func NewConnectionInformation(id string, function context.CancelFunc, CancelContext context.Context) *ConnectionInformation {
+func NewConnectionInformation(
+	id string,
+	function context.CancelFunc,
+	CancelContext context.Context,
+	nextFuncOutBoundChannel rxgo.NextFunc,
+	nextFuncInBoundChannel rxgo.NextFunc,
+
+) *ConnectionInformation {
 	return &ConnectionInformation{
-		Id:             id,
-		CancelContext:  CancelContext,
-		CancelFunc:     function,
-		ConnectionTime: time.Now().Truncate(time.Second),
-		//StackProperties: make(map[StackPropertyKey]StackPropertyValue),
+		Id:                      id,
+		CancelContext:           CancelContext,
+		CancelFunc:              function,
+		ConnectionTime:          time.Now().Truncate(time.Second),
+		NextFuncOutBoundChannel: nextFuncOutBoundChannel,
+		NextFuncInBoundChannel:  nextFuncInBoundChannel,
 	}
 }
 
 type ConnectionCreated struct {
-	ConnectionId   string
-	ConnectionName string
-	CancelFunc     context.CancelFunc
-	ConnectionTime time.Time
-	CancelContext  context.Context
+	ConnectionId            string
+	ConnectionName          string
+	CancelFunc              context.CancelFunc
+	ConnectionTime          time.Time
+	CancelContext           context.Context
+	nextFuncOutBoundChannel rxgo.NextFunc
+	nextFuncInBoundChannel  rxgo.NextFunc
 }
 
 func NewConnectionCreated(
@@ -61,13 +74,17 @@ func NewConnectionCreated(
 	cancelFunc context.CancelFunc,
 	connectionTime time.Time,
 	cancelContext context.Context,
+	nextFuncOutBoundChannel rxgo.NextFunc,
+	nextFuncInBoundChannel rxgo.NextFunc,
 ) *ConnectionCreated {
 	return &ConnectionCreated{
-		ConnectionId:   connectionId,
-		ConnectionName: connectionName,
-		CancelFunc:     cancelFunc,
-		ConnectionTime: connectionTime,
-		CancelContext:  cancelContext,
+		ConnectionId:            connectionId,
+		ConnectionName:          connectionName,
+		CancelFunc:              cancelFunc,
+		ConnectionTime:          connectionTime,
+		CancelContext:           cancelContext,
+		nextFuncOutBoundChannel: nextFuncOutBoundChannel,
+		nextFuncInBoundChannel:  nextFuncInBoundChannel,
 	}
 }
 
@@ -76,11 +93,11 @@ type ConnectionClosed struct {
 }
 
 type ConnectionState struct {
-	ConnectionId   string
-	CancelContext  context.Context
-	CancelFunc     context.CancelFunc
-	Name           string
-	ConnectionTime time.Time
-	Grid           []LineData
-	KeyValue       []KeyValue
+	ConnectionId string
+	//CancelContext  context.Context
+	//CancelFunc     context.CancelFunc
+	//Name           string
+	//ConnectionTime time.Time
+	Grid     []LineData
+	KeyValue []KeyValue
 }
