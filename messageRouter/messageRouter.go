@@ -3,10 +3,12 @@ package messageRouter
 import (
 	"github.com/bhbosman/goerrors"
 	"github.com/reactivex/rxgo/v2"
+	"io"
 	"reflect"
 )
 
 type IMessageRouter interface {
+	io.Closer
 	Add(fn interface{}) error
 	Route(i interface{})
 	MultiRoute(messages ...interface{})
@@ -16,6 +18,10 @@ type IMessageRouter interface {
 type messageRouter struct {
 	m       map[reflect.Type]reflect.Value
 	unknown rxgo.NextFunc
+}
+
+func (self *messageRouter) Close() error {
+	return nil
 }
 
 func NewMessageRouter() IMessageRouter {
