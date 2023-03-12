@@ -25,10 +25,3 @@ func (self *PublishRxHandlerCounters) Add(counter *RxHandlerCounter) {
 func (self *PublishRxHandlerCounters) AddMapData(key string, value string) {
 	self.Data[key] = value
 }
-
-type ClearCounters struct {
-}
-
-func NewClearCounters() *ClearCounters {
-	return &ClearCounters{}
-}
