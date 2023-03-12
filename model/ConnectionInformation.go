@@ -64,8 +64,8 @@ type ConnectionCreated struct {
 	CancelFunc              context.CancelFunc
 	ConnectionTime          time.Time
 	CancelContext           context.Context
-	nextFuncOutBoundChannel rxgo.NextFunc
-	nextFuncInBoundChannel  rxgo.NextFunc
+	NextFuncOutBoundChannel rxgo.NextFunc
+	NextFuncInBoundChannel  rxgo.NextFunc
 }
 
 func NewConnectionCreated(
@@ -83,8 +83,8 @@ func NewConnectionCreated(
 		CancelFunc:              cancelFunc,
 		ConnectionTime:          connectionTime,
 		CancelContext:           cancelContext,
-		nextFuncOutBoundChannel: nextFuncOutBoundChannel,
-		nextFuncInBoundChannel:  nextFuncInBoundChannel,
+		NextFuncOutBoundChannel: nextFuncOutBoundChannel,
+		NextFuncInBoundChannel:  nextFuncInBoundChannel,
 	}
 }
 
