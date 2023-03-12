@@ -10,6 +10,7 @@ type IMessageRouter interface {
 	Add(fn interface{}) error
 	Route(i interface{})
 	MultiRoute(messages ...interface{})
+	RegisterUnknown(unknown rxgo.NextFunc)
 }
 
 type messageRouter struct {

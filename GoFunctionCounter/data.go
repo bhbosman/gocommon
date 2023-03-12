@@ -10,7 +10,7 @@ type data struct {
 	emptyQueueReceived bool
 	dirty              bool
 	m                  map[string]bool
-	messageRouter      *messageRouter.MessageRouter
+	messageRouter      messageRouter.IMessageRouter
 	cb                 func(names []string)
 }
 
@@ -49,7 +49,7 @@ func (self *data) handleTimerReceived(_ *timerReceived) {
 			self.dirty = false
 			if self.cb != nil {
 				ss := make([]string, 0, len(self.m))
-				for k, _ := range self.m {
+				for k := range self.m {
 					ss = append(ss, k)
 				}
 				sort.Strings(ss)
