@@ -6,6 +6,12 @@ import (
 	"reflect"
 )
 
+type IMessageRouter interface {
+	Add(fn interface{}) error
+	Route(i interface{})
+	MultiRoute(messages ...interface{})
+}
+
 type MessageRouter struct {
 	m       map[reflect.Type]reflect.Value
 	unknown rxgo.NextFunc
