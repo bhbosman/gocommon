@@ -12,19 +12,19 @@ type IMessageRouter interface {
 	MultiRoute(messages ...interface{})
 }
 
-type MessageRouter struct {
+type messageRouter struct {
 	m       map[reflect.Type]reflect.Value
 	unknown rxgo.NextFunc
 }
 
-func NewMessageRouter() *MessageRouter {
+func NewMessageRouter() IMessageRouter {
 	m := make(map[reflect.Type]reflect.Value)
-	return &MessageRouter{
+	return &messageRouter{
 		m: m,
 	}
 }
 
-func (self *MessageRouter) Add(fn interface{}) error {
+func (self *messageRouter) Add(fn interface{}) error {
 	typeOf := reflect.TypeOf(fn)
 	if typeOf.Kind() != reflect.Func {
 		return goerrors.NewInvalidParamError("fn", "The parameter must be a function")
@@ -36,10 +36,10 @@ func (self *MessageRouter) Add(fn interface{}) error {
 	self.m[paramType] = reflect.ValueOf(fn)
 	return nil
 }
-func (self *MessageRouter) RegisterUnknown(unknown rxgo.NextFunc) {
+func (self *messageRouter) RegisterUnknown(unknown rxgo.NextFunc) {
 	self.unknown = unknown
 }
-func (self *MessageRouter) Route(i interface{}) {
+func (self *messageRouter) Route(i interface{}) {
 	typeof := reflect.TypeOf(i)
 	if function, ok := self.m[typeof]; ok {
 		param := reflect.ValueOf(i)
@@ -57,7 +57,7 @@ func (self *MessageRouter) Route(i interface{}) {
 	return
 }
 
-func (self *MessageRouter) MultiRoute(messages ...interface{}) {
+func (self *messageRouter) MultiRoute(messages ...interface{}) {
 	for _, message := range messages {
 		self.Route(message)
 	}
