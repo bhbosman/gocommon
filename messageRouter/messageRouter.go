@@ -12,7 +12,6 @@ type MessageRouter struct {
 }
 
 func NewMessageRouter() *MessageRouter {
-
 	m := make(map[reflect.Type]reflect.Value)
 	return &MessageRouter{
 		m: m,
