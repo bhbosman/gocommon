@@ -1,8 +1,8 @@
 package GoFunctionCounter
 
 import (
-	"github.com/bhbosman/gocommon/Services/IDataShutDown"
-	"github.com/bhbosman/gocommon/Services/IFxService"
+	"github.com/bhbosman/gocommon/services/IDataShutDown"
+	"github.com/bhbosman/gocommon/services/IFxService"
 )
 
 type IGoFunctionCounter interface {

@@ -2,7 +2,7 @@ package implementations
 
 import (
 	"fmt"
-	"github.com/bhbosman/gocommon/Services/interfaces"
+	"github.com/bhbosman/gocommon/services/interfaces"
 	"time"
 )
 

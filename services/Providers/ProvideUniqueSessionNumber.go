@@ -1,8 +1,8 @@
 package Providers
 
 import (
-	"github.com/bhbosman/gocommon/Services/implementations"
-	"github.com/bhbosman/gocommon/Services/interfaces"
+	"github.com/bhbosman/gocommon/services/implementations"
+	"github.com/bhbosman/gocommon/services/interfaces"
 	"go.uber.org/fx"
 )
 

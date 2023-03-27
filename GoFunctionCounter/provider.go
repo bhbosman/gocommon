@@ -2,7 +2,7 @@ package GoFunctionCounter
 
 import (
 	"context"
-	"github.com/bhbosman/gocommon/Services/interfaces"
+	"github.com/bhbosman/gocommon/services/interfaces"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )
