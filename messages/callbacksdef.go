@@ -7,10 +7,8 @@ import (
 
 type IApp interface {
 	Start(
-		//cancellationContext goConn.ICancellationContext,
 		ctx context.Context) error
 	Stop(
-		//cancellationContext goConn.ICancellationContext,
 		ctx context.Context) error
 	Err() error
 }
