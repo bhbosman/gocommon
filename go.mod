@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/bhbosman/goCommsDefinitions v0.0.0-20230308211643-24fe88b2378e
-	github.com/bhbosman/goConn v0.0.0-00010101000000-000000000000
+	github.com/bhbosman/goConn v0.0.0-20230327111455-7a39299fb0aa
 	github.com/bhbosman/goerrors v0.0.0-20220623084908-4d7bbcd178cf
 	github.com/bhbosman/gomessageblock v0.0.0-20220617132215-32f430d7de62
 	github.com/bhbosman/goprotoextra v0.0.2
@@ -40,7 +40,6 @@ replace github.com/golang/mock => github.com/bhbosman/gomock v1.6.1-0.2023030206
 replace github.com/cskr/pubsub => github.com/bhbosman/pubsub v1.0.3-0.20220802200819-029949e8a8af
 
 replace github.com/rivo/tview => github.com/bhbosman/tview v0.0.0-20230310100135-f8b257a85d36
-
 
 replace github.com/bhbosman/goCommsDefinitions => ../goCommsDefinitions
 
