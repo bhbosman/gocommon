@@ -7,6 +7,7 @@ require (
 	github.com/bhbosman/goConn v0.0.0-20230327111455-7a39299fb0aa
 	github.com/bhbosman/goerrors v0.0.0-20220623084908-4d7bbcd178cf
 	github.com/bhbosman/gomessageblock v0.0.0-20220617132215-32f430d7de62
+	github.com/bhbosman/goprotoextra v0.0.1
 	github.com/cskr/pubsub v1.0.2
 	github.com/golang/mock v1.6.0
 	github.com/icza/gox v0.0.0-20220321141217-e2d488ab2fbc
@@ -46,6 +47,6 @@ replace github.com/reactivex/rxgo/v2 => ../goRx
 
 replace github.com/bhbosman/gomessageblock => ../gomessageblock
 
-//replace github.com/bhbosman/goprotoextra => ../goprotoextra
+replace github.com/bhbosman/goprotoextra => ../goprotoextra
 
 replace github.com/bhbosman/goConn => ../goConn
