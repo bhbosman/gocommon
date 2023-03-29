@@ -46,7 +46,6 @@ replace (
 	github.com/bhbosman/goCommsNetDialer => ../goCommsNetDialer
 	github.com/bhbosman/goCommsNetListener => ../goCommsNetListener
 	github.com/bhbosman/goCommsStacks => ../goCommsStacks
-	github.com/bhbosman/goConn => ../goConn
 	github.com/bhbosman/goFxApp => ../goFxApp
 	github.com/bhbosman/goFxAppManager => ../goFxAppManager
 	github.com/bhbosman/goMessages => ../goMessages
