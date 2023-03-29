@@ -37,17 +37,17 @@ replace (
 	github.com/golang/mock => github.com/bhbosman/gomock v1.6.1-0.20230302060806-d02c40b7514e
 )
 
-replace (
-	github.com/bhbosman/goCommonMarketData => ../goCommonMarketData
-	github.com/bhbosman/goCommsDefinitions => ../goCommsDefinitions
-	github.com/bhbosman/goCommsMultiDialer => ../goCommsMultiDialer
-	github.com/bhbosman/goCommsNetDialer => ../goCommsNetDialer
-	github.com/bhbosman/goCommsNetListener => ../goCommsNetListener
-	github.com/bhbosman/goCommsStacks => ../goCommsStacks
-	github.com/bhbosman/goFxApp => ../goFxApp
-	github.com/bhbosman/goFxAppManager => ../goFxAppManager
-	github.com/bhbosman/goMessages => ../goMessages
-	github.com/bhbosman/gocommon => ../gocommon
-	github.com/bhbosman/gocomms => ../gocomms
-	github.com/bhbosman/gomessageblock => ../gomessageblock
-)
+//replace (
+//	github.com/bhbosman/goCommonMarketData => ../goCommonMarketData
+//	github.com/bhbosman/goCommsDefinitions => ../goCommsDefinitions
+//	github.com/bhbosman/goCommsMultiDialer => ../goCommsMultiDialer
+//	github.com/bhbosman/goCommsNetDialer => ../goCommsNetDialer
+//	github.com/bhbosman/goCommsNetListener => ../goCommsNetListener
+//	github.com/bhbosman/goCommsStacks => ../goCommsStacks
+//	github.com/bhbosman/goFxApp => ../goFxApp
+//	github.com/bhbosman/goFxAppManager => ../goFxAppManager
+//	github.com/bhbosman/goMessages => ../goMessages
+//	github.com/bhbosman/gocommon => ../gocommon
+//	github.com/bhbosman/gocomms => ../gocomms
+//	github.com/bhbosman/gomessageblock => ../gomessageblock
+//)
