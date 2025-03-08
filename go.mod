@@ -5,7 +5,7 @@ go 1.24.0
 require (
 	github.com/bhbosman/goCommsDefinitions v0.0.0-20250308000247-4306925b3dfd
 	github.com/bhbosman/goerrors v0.0.0-20250307194237-312d070c8e38
-	github.com/bhbosman/gomessageblock v0.0.0-20250307141417-ab783e8e2eba
+	github.com/bhbosman/gomessageblock v0.0.0-20250308073733-0b3daca12e3a
 	github.com/bhbosman/goprotoextra v0.0.2
 	github.com/cskr/pubsub v1.0.2
 	github.com/golang/mock v1.6.0
