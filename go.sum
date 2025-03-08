@@ -11,8 +11,8 @@ github.com/bhbosman/gomock v1.6.1-0.20250308071159-4cf72f668c72 h1:r5CkchfDmndKs
 github.com/bhbosman/gomock v1.6.1-0.20250308071159-4cf72f668c72/go.mod h1:QvQoHRNh6hbY5chl6UwMoWO7rhBOWN1NQmGPYuR06CY=
 github.com/bhbosman/goprotoextra v0.0.2 h1:LEEUuDa7X7ojAP56dw5SDoiYnTrErpjI7Bp25Q9Nw2I=
 github.com/bhbosman/goprotoextra v0.0.2/go.mod h1:Jt+JnplitvFQLYeUKIuBnc+5aHBtRtvze8Hce0gMXiM=
-github.com/bhbosman/pubsub v1.0.3-0.20250308162024-50f212a35484 h1:7L9tOPXEY7T3OCI5uNszNWJ2GqfJAREkZEw77Ki6VZA=
-github.com/bhbosman/pubsub v1.0.3-0.20250308162024-50f212a35484/go.mod h1:/cxRJx2sbd/mII/T3GTLM/2EUisAfq6Zy8qb9lBqpRk=
+github.com/bhbosman/pubsub v1.0.3-0.20250308211253-e47ee222bb15 h1:YAp8HXZRg3cmEvlLz0GgKFnkYNWe6BUA8J+qsoj6MeQ=
+github.com/bhbosman/pubsub v1.0.3-0.20250308211253-e47ee222bb15/go.mod h1:/cxRJx2sbd/mII/T3GTLM/2EUisAfq6Zy8qb9lBqpRk=
 github.com/cenkalti/backoff/v4 v4.0.0/go.mod h1:eEew/i+1Q6OrCDZh3WiXYv3+nJwBASZ8Bog/87DQnVg=
 github.com/cenkalti/backoff/v4 v4.3.0 h1:MyRJ/UdXutAwSAT+s3wNd7MfTIcy71VQueUuFK343L8=
 github.com/cenkalti/backoff/v4 v4.3.0/go.mod h1:Y3VNntkOUPxTVeUxJ/G5vcM//AlwfmyYozVcomhLiZE=
