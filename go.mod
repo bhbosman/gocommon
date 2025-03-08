@@ -7,8 +7,6 @@ require (
 	github.com/bhbosman/goerrors v0.0.0-20250307194237-312d070c8e38
 	github.com/bhbosman/gomessageblock v0.0.0-20250308073733-0b3daca12e3a
 	github.com/bhbosman/goprotoextra v0.0.2
-	github.com/cskr/pubsub v1.0.2
-	github.com/golang/mock v1.6.0
 	github.com/icza/gox v0.2.0
 	github.com/reactivex/rxgo/v2 v2.5.0
 	go.uber.org/fx v1.23.0
@@ -31,22 +29,18 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace (
-	github.com/cskr/pubsub => github.com/bhbosman/pubsub v1.0.3-0.20250308124829-e5731aa33222
-	github.com/golang/mock => github.com/bhbosman/gomock v1.6.1-0.20250308071159-4cf72f668c72
+
+require (
+	github.com/cskr/pubsub v1.0.2
+	github.com/gdamore/tcell/v2 v2.8.1
+	github.com/golang/mock v1.6.0
+	github.com/rivo/tview v0.0.0-20241227133733-17b7edb88c57
 )
 
-//replace (
-//	github.com/bhbosman/goCommonMarketData => ../goCommonMarketData
-//	github.com/bhbosman/goCommsDefinitions => ../goCommsDefinitions
-//	github.com/bhbosman/goCommsMultiDialer => ../goCommsMultiDialer
-//	github.com/bhbosman/goCommsNetDialer => ../goCommsNetDialer
-//	github.com/bhbosman/goCommsNetListener => ../goCommsNetListener
-//	github.com/bhbosman/goCommsStacks => ../goCommsStacks
-//	github.com/bhbosman/goFxApp => ../goFxApp
-//	github.com/bhbosman/goFxAppManager => ../goFxAppManager
-//	github.com/bhbosman/goMessages => ../goMessages
-//	github.com/bhbosman/gocommon => ../gocommon
-//	github.com/bhbosman/gocomms => ../gocomms
-//	github.com/bhbosman/gomessageblock => ../gomessageblock
-//)
+
+replace (
+	github.com/cskr/pubsub => github.com/bhbosman/pubsub v1.0.3-0.20250308124829-e5731aa33222
+	github.com/gdamore/tcell/v2 => github.com/bhbosman/tcell/v2 v2.5.2-0.20250308093601-f0942a296aa0
+	github.com/golang/mock => github.com/bhbosman/gomock v1.6.1-0.20250308071159-4cf72f668c72
+	github.com/rivo/tview => github.com/bhbosman/tview v0.0.0-20250308051327-a656c1bc9cfa
+)
