@@ -20,7 +20,9 @@ require (
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
+	github.com/gdamore/tcell/v2 v2.8.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/rivo/tview v0.0.0-20241227133733-17b7edb88c57 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
 	github.com/stretchr/testify v1.10.0 // indirect
 	github.com/teivah/onecontext v1.3.0 // indirect
@@ -29,14 +31,10 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-
 require (
 	github.com/cskr/pubsub v1.0.2
-	github.com/gdamore/tcell/v2 v2.8.1
 	github.com/golang/mock v1.6.0
-	github.com/rivo/tview v0.0.0-20241227133733-17b7edb88c57
 )
-
 
 replace (
 	github.com/cskr/pubsub => github.com/bhbosman/pubsub v1.0.3-0.20250308124829-e5731aa33222
