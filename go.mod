@@ -3,7 +3,7 @@ module github.com/bhbosman/gocommon
 go 1.24.0
 
 require (
-	github.com/bhbosman/goCommsDefinitions v0.0.0-20250308074916-3e7c0d32b971
+	github.com/bhbosman/goCommsDefinitions v0.0.0-20250308144130-64993b60920c
 	github.com/bhbosman/goerrors v0.0.0-20250307194237-312d070c8e38
 	github.com/bhbosman/gomessageblock v0.0.0-20250308073733-0b3daca12e3a
 	github.com/bhbosman/goprotoextra v0.0.2
